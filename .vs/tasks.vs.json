@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-Basic_Chat_Application",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}

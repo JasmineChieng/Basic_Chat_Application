@@ -1,0 +1,6 @@
+C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\UserDLL\bin\Debug\UserDLL.dll
+C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\UserDLL\bin\Debug\UserDLL.pdb
+C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.csproj.AssemblyReference.cache
+C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.csproj.CoreCompileInputs.cache
+C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.dll
+C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.pdb
