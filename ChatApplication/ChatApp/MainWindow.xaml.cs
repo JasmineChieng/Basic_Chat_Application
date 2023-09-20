@@ -45,6 +45,7 @@ namespace ChatApp
             foobFactory = new ChannelFactory<BusinessInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
             registration = new Window3();
+
         }
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)

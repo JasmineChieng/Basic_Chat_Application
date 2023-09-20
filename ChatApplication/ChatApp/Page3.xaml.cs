@@ -213,10 +213,16 @@ namespace ChatApp
                 Orientation = Orientation.Horizontal
             };
 
+
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //Console.WriteLine(baseDirectory);
+            string imageRelativePath = "groupsLogo.png";
+            string imagePath = System.IO.Path.Combine(baseDirectory, imageRelativePath);
+
             // Create an Image control and set its properties
             Image image = new Image
             {
-                Source = new BitmapImage(new Uri("C:\\Users\\shuma\\source\\repos\\JasmineChieng\\Basic_Chat_Application\\ChatApplication\\ChatApp\\resources\\groupsLogo.png")), // Replace 'icon.png' with your image path
+                Source = new BitmapImage(new Uri(imagePath)), // Replace 'icon.png' with your image path
                 Width = 24,
                 Height = 24,
                 Margin = new Thickness(0, 0, 5, 0) // Optional margin to separate image and text

@@ -75,11 +75,17 @@ namespace ChatApp
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(350) }); // Auto-sized column for the private label
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(60) }); // Auto-sized column for the join button
 
+
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //Console.WriteLine(baseDirectory);
+            string imageRelativePath = "privateIcon2.png";
+            string imagePath = System.IO.Path.Combine(baseDirectory, imageRelativePath);
+
             // Create the Label for private groups
             Label privateLabel = new Label
             {
                 Content = "Private",
-                Background = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\shuma\\source\\repos\\JasmineChieng\\Basic_Chat_Application\\ChatApplication\\ChatApp\\resources\\privateIcon.png"))),
+                Background = new ImageBrush(new BitmapImage(new Uri(imagePath))),
                 Width = 20,
                 Height = 20,
                 Margin = new Thickness(2),
