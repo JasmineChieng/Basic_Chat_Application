@@ -13,18 +13,37 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UserDLL;
+using System.ServiceModel;
+using BusinessTierServer;
+using System.IO;
+using System.Drawing;
+using System.Security.Cryptography;
+using System.Xml.Linq;
+using System.Net.NetworkInformation;
+using System.Reflection;
 
 namespace ChatApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    
+
     public partial class MainWindow : Window
     {
         Window3 registration;
+        private BusinessInterface foob;
+
         public MainWindow()
         {
             InitializeComponent();
+            ChannelFactory<BusinessInterface> foobFactory;
+            NetTcpBinding tcp = new NetTcpBinding();
+            //Set the URL and create the connection!
+            string URL = "net.tcp://localhost:8200/DataBusinessService";
+            foobFactory = new ChannelFactory<BusinessInterface>(tcp, URL);
+            foob = foobFactory.CreateChannel();
             registration = new Window3();
         }
 
@@ -37,6 +56,7 @@ namespace ChatApp
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) )
             {
                 MessageBox.Show("Please fill up all field");
+                //Console.WriteLine("username is empty");
 
             }
             else

@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -144,6 +145,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessTierServer\BusinessTierServer.csproj">
+      <Project>{66e9eea3-91b6-4fa1-ab07-04725e5c83d8}</Project>
+      <Name>BusinessTierServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatabaseServer\DatabaseServer.csproj">
+      <Project>{70516b17-6962-48cf-a644-759936a26e8c}</Project>
+      <Name>DatabaseServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UserDLL\UserDLL.csproj">
       <Project>{fe998d8e-8631-4810-9853-dfcf23577307}</Project>
       <Name>UserDLL</Name>

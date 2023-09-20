@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatApp"
         mc:Ignorable="d"
-        Title="Window2" Height="180" Width="200">
+        Title="Window2" Height="180" Width="200"
+        Background="PaleGoldenrod">
     <Grid>
                 <Label Content="Enter Code To Join:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
                 <TextBox x:Name="CodeTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="35,55,0,0"/>

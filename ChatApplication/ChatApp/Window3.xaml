@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatApp"
         mc:Ignorable="d"
-        Title="Window3" Height="450" Width="800">
+        Title="Window3" Height="450" Width="800"
+        Background="PaleGoldenrod">
     <Grid>
         <Label Content="Registration" HorizontalAlignment="Center" Margin="0,36,0,0" VerticalAlignment="Top" FontSize="32" FontFamily="Forte" Foreground="#FFF3BC5F"/>
         <Label Content="Username :" HorizontalAlignment="Left" Margin="170,131,0,0" VerticalAlignment="Top" Width="97"/>
@@ -14,7 +15,7 @@
         <TextBox x:Name="usernameTB" HorizontalAlignment="Left" Height="26" Margin="338,131,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="310"/>
         <TextBox x:Name="passwordTB" HorizontalAlignment="Left" Height="26" Margin="338,191,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="310"/>
         <TextBox x:Name="retype_pwTB" HorizontalAlignment="Left" Height="26" Margin="338,259,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="310"/>
-        <Button x:Name="registerBtn" Content="Register" HorizontalAlignment="Left" Height="32" Margin="170,350,0,0" VerticalAlignment="Top" Width="202" Foreground="White" BorderBrush="#FFF3BC5F" Background="#FFF3BC5F" Click="registerBtn_Click" FontSize="20" RenderTransformOrigin="0.5,0.5">
+        <Button x:Name="registerBtn" Content="Register" HorizontalAlignment="Left" Height="32" Margin="125,350,0,0" VerticalAlignment="Top" Width="202" Foreground="White" BorderBrush="#FFF3BC5F" Background="#FFF3BC5F" Click="registerBtn_Click" FontSize="20" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -24,7 +25,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="loginBtn" Content="Login" HorizontalAlignment="Left" Height="32" Margin="480,350,0,0" VerticalAlignment="Top" Width="202" Foreground="White" BorderBrush="#FFF3BC5F" Background="#FFF3BC5F" FontSize="20" RenderTransformOrigin="0.5,0.5" Click="loginBtn_Click">
+        <Button x:Name="loginBtn" Content="Login" HorizontalAlignment="Left" Height="32" Margin="475,350,0,0" VerticalAlignment="Top" Width="202" Foreground="White" BorderBrush="#FFF3BC5F" Background="#FFF3BC5F" FontSize="20" RenderTransformOrigin="0.5,0.5" Click="loginBtn_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
