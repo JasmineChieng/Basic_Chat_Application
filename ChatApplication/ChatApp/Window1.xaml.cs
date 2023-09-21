@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessTierServer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,18 +24,20 @@ namespace ChatApp
     public partial class Window1 : Window
     {
         private Page3 page3;
-
+        private User user;
+        private BusinessInterface foob;
         public string ButtonContentForChatHistory { get; set; }
-        public Window1()
+        public Window1(BusinessInterface foob, User user)
         {
             InitializeComponent();
+            this.user = user;
+            this.foob = foob;
             // Navigate the Frame to the default page when the window loads
             Page2 defaultPage = new Page2(); // Replace with the actual default page
             ChatBox.NavigationService.Navigate(defaultPage);
 
-            page3 = new Page3(this);
-            // Load the saved button content list from Page3
-            List<ChatGroup> groupList = page3.GroupList;
+            page3 = new Page3(this, user, foob);
+            List<ChatGroup> groupList = user.JoinedGroups;
             if (groupList != null)
             {
                 foreach (var content in groupList)
@@ -48,47 +51,34 @@ namespace ChatApp
                     ChatContainer.Children.Add(groupButton);
                 }
             }
-
         }
 
         private void createGroupBtn_Click(object sender, RoutedEventArgs e)
         {
-            ChatBox.Content = new Page3(this);
+            ChatBox.Content = new Page3(this,user,foob);
         }
 
         private void viewGroupBtn_Click(object sender, RoutedEventArgs e)
         {
-            page3 = new Page3(this);
-            ChatBox.Content = new Page4(page3.GroupList);
+            page3 = new Page3(this,user, foob);
+            ChatBox.Content = new Page4(page3.GroupList,user,foob,this);
         }
 
         private void Page3_GroupButton_Click(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button)sender;
-            string groupName = GetTextBlockContent(clickedButton);
-
-            // Set the ButtonContent property before navigating to ChatHistoryPage
-            ButtonContentForChatHistory = groupName;
-
-            // Create an instance of the ChatHistoryPage and navigate to it
-            Page1 chatHistoryPage = new Page1();
-            chatHistoryPage.SetChatHistory(groupName); // Pass the group name to set chat history
-            ChatBox.NavigationService.Navigate(chatHistoryPage);
-        }
-
-        private string GetTextBlockContent(Button button)
-        {
-            // Assuming that the TextBlock is the first child of the Grid within the Button's Content
-            if (button.Content is StackPanel panel)
+            // Retrieve the ChatGroup object from the Tag property
+            if (clickedButton.Tag is ChatGroup selectedChatGroup)
             {
-                if (panel.Children.Count > 0 && panel.Children[1] is TextBlock textBlock)
-                {
-                    return textBlock.Text;
-                }
+                Page1 chatHistoryPage = new Page1(user, selectedChatGroup,foob);
+                ChatBox.NavigationService.Navigate(chatHistoryPage);
             }
-
-            return string.Empty; // Return an empty string if not found
+            else
+            {
+            
+            }
         }
+
 
         private void logoutBtn_Click(object sender, RoutedEventArgs e)
         {

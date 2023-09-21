@@ -7,7 +7,7 @@ using UserDLL;
 
 namespace DatabaseServer
 {
-    internal class ServerInterfaceImpl : ServerInterface
+    public class ServerInterfaceImpl : ServerInterface
     {
         private List<User> users = new List<User>();
         private List<ChatGroup> chatGroups = new List<ChatGroup>();
@@ -47,6 +47,7 @@ namespace DatabaseServer
 
         public bool JoinGroupChat(string joinCode, string username)
         {
+            /*
             // Find the chat group with the given join code
             var chatGroup = chatGroups.FirstOrDefault(c => c.JoinCode == joinCode);
 
@@ -56,8 +57,9 @@ namespace DatabaseServer
                 chatGroup.Members.Add(username);
                 return true; // User joined the chat group
             }
-
+*/
             return false; // Chat group not found
+            
         }
 
         public List<ChatGroup> GetAllGroupChats()
@@ -67,6 +69,7 @@ namespace DatabaseServer
 
         public List<string> GetUsersInChat(string chatName)
         {
+            /*
             // Find the chat group with the given name
             var chatGroup = chatGroups.FirstOrDefault(c => c.Name == chatName);
 
@@ -74,7 +77,7 @@ namespace DatabaseServer
             {
                 return chatGroup.Members;
             }
-
+            */
             return new List<string>(); // Return an empty list if the chat group is not found
         }
 

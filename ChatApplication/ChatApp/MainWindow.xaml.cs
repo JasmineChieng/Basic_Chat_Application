@@ -44,7 +44,8 @@ namespace ChatApp
             string URL = "net.tcp://localhost:8200/DataBusinessService";
             foobFactory = new ChannelFactory<BusinessInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
-            registration = new Window3();
+            registration = new Window3(foob);
+
         }
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
@@ -53,26 +54,21 @@ namespace ChatApp
             string username = usernameTB.Text;
             string password = passwordTB.Text;
 
+
+            User user = foob.LoginUser(username);
+
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) )
             {
                 MessageBox.Show("Please fill up all field");
-                //Console.WriteLine("username is empty");
 
             }
             else
             {
-                List<User> users = registration.GetUserList();
-                User userFound=  users.FirstOrDefault(u => u.Username == username);
-
-                if(userFound ==null)
+                if(user!=null)
                 {
-                    MessageBox.Show("User not found. Kindly register yourself first");
-                }
-                else
-                {
-                    if (userFound.Password.Equals(password))
+                    if(user.Password.Equals(password))
                     {
-                        Window1 chatWindow = new Window1();
+                        Window1 chatWindow = new Window1(foob,user);
                         this.Visibility = Visibility.Hidden;
                         chatWindow.Show();
                     }
@@ -80,9 +76,12 @@ namespace ChatApp
                     {
                         MessageBox.Show("Wrong Password. Please try again");
                     }
+
                 }
-
-
+                else
+                {
+                    MessageBox.Show("User not found. Kindly register yourself first");
+                }
             }
   
         }
