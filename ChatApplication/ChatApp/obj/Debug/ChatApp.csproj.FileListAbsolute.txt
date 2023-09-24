@@ -77,3 +77,44 @@ C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication
 C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\DatabaseServer.exe.config
 C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\Newtonsoft.Json.dll
 C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\Newtonsoft.Json.xml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\ChatApp.exe.config
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\ChatApp.exe
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\ChatApp.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\BusinessTierServer.exe
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\DatabaseServer.exe
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\UserDLL.dll
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\Newtonsoft.Json.dll
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\BusinessTierServer.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\BusinessTierServer.exe.config
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\DatabaseServer.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\DatabaseServer.exe.config
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\UserDLL.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\bin\Debug\Newtonsoft.Json.xml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.csproj.AssemblyReference.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.csproj.SuggestedBindingRedirects.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\MainWindow.g.cs
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Page1.g.cs
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Page2.g.cs
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Page3.g.cs
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Page4.g.cs
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Window1.g.cs
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Window2.g.cs
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Window3.g.cs
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\App.g.cs
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp_MarkupCompile.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp_MarkupCompile.lref
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\MainWindow.baml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Page1.baml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Page2.baml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Page3.baml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Page4.baml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Window1.baml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Window2.baml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Window3.baml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.g.resources
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.Properties.Resources.resources
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.csproj.GenerateResource.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.csproj.CoreCompileInputs.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.csproj.CopyComplete
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.exe
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.pdb

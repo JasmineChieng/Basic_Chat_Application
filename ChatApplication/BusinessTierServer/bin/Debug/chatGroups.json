@@ -15,6 +15,45 @@
         "Password": "123",
         "JoinedGroups": [],
         "PrivateMessages": []
+      },
+      {
+        "Username": "123",
+        "Password": "123",
+        "JoinedGroups": [
+          {
+            "Name": "1",
+            "IsPrivate": false,
+            "JoinCode": null,
+            "Members": [
+              {
+                "Username": "123",
+                "Password": "123",
+                "JoinedGroups": [],
+                "PrivateMessages": []
+              },
+              {
+                "Username": "111",
+                "Password": "111",
+                "JoinedGroups": [],
+                "PrivateMessages": []
+              },
+              {
+                "Username": "111",
+                "Password": "111",
+                "JoinedGroups": [],
+                "PrivateMessages": []
+              },
+              {
+                "Username": "111",
+                "Password": "111",
+                "JoinedGroups": [],
+                "PrivateMessages": []
+              }
+            ],
+            "ChatHistory": []
+          }
+        ],
+        "PrivateMessages": []
       }
     ],
     "ChatHistory": [
@@ -26,6 +65,64 @@
       {
         "Sender": "test",
         "Message": "HELLO",
+        "Timestamp": "0001-01-01T00:00:00"
+      },
+      {
+        "Sender": "123",
+        "Message": "omg",
+        "Timestamp": "0001-01-01T00:00:00"
+      }
+    ]
+  },
+  {
+    "Name": "1",
+    "IsPrivate": false,
+    "JoinCode": null,
+    "Members": [
+      {
+        "Username": "123",
+        "Password": "123",
+        "JoinedGroups": [],
+        "PrivateMessages": []
+      },
+      {
+        "Username": "111",
+        "Password": "111",
+        "JoinedGroups": [],
+        "PrivateMessages": []
+      },
+      {
+        "Username": "111",
+        "Password": "111",
+        "JoinedGroups": [],
+        "PrivateMessages": []
+      },
+      {
+        "Username": "111",
+        "Password": "111",
+        "JoinedGroups": [],
+        "PrivateMessages": []
+      }
+    ],
+    "ChatHistory": [
+      {
+        "Sender": "123",
+        "Message": "hi",
+        "Timestamp": "0001-01-01T00:00:00"
+      },
+      {
+        "Sender": "123",
+        "Message": "wow",
+        "Timestamp": "0001-01-01T00:00:00"
+      },
+      {
+        "Sender": "123",
+        "Message": "hello",
+        "Timestamp": "0001-01-01T00:00:00"
+      },
+      {
+        "Sender": "111",
+        "Message": "test",
         "Timestamp": "0001-01-01T00:00:00"
       }
     ]
