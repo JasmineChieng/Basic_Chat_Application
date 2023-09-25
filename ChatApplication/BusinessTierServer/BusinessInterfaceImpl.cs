@@ -52,6 +52,8 @@ namespace BusinessTierServer
             { return user; }
             return null;
         }
+
+        //the ChatGroup object received is actually a multiple member chat, hence we are actually upcasting it
         public bool CreateGroupChat(ChatGroup chatGroup, User user)
         {
             // Check if the chat group name is unique
@@ -74,6 +76,41 @@ namespace BusinessTierServer
             chatGroups.Add(chatGroup);
             // Save the modified chat groups list to the file
             SaveChatGroups();
+            // Save the modified user data (including JoinedGroups) to the file
+            SaveUserData();
+
+            return true; // Chat group creation successful
+        }
+
+        
+        public bool StartPrivateChat(User messagingUser, User receivingUser)
+        {
+            List<String> tempPMList = messagingUser.JoinedPrivateChats;
+
+            // Check if the there is already an existing private chat by checking if any privatechat names in the messaging user contains the receiving users name
+            if (tempPMList.Any(c => c.Equals(receivingUser.Username)))
+            {
+                return false; // Chat group name already exists
+            }
+
+            // Update the JoinedPrivateChat list for both users in the list of users
+            foreach (User u in users)
+            {
+                if (u.Username.Equals(messagingUser.Username))
+                {
+                    u.JoinedPrivateChats.Add(receivingUser.Username);
+                }
+                if(u.Username.Equals(receivingUser.Username))
+                {
+                    u.JoinedPrivateChats.Add(messagingUser.Username);
+                }
+
+            }
+
+            // Store the chat group in the list
+            //chatGroups.Add(chatGroup);
+            // Save the modified chat groups list to the file
+            //SaveChatGroups();
             // Save the modified user data (including JoinedGroups) to the file
             SaveUserData();
 
@@ -139,6 +176,7 @@ namespace BusinessTierServer
                 // You can log the error or take appropriate action
             }
         }
+
 
         // Method to load chat groups from a JSON file
         public List<ChatGroup> LoadChatGroups()
@@ -227,6 +265,28 @@ namespace BusinessTierServer
             SaveChatGroups();
         }
 
+        public void handlePrivateMessage(User messagingUser, User receivingUser, PrivateMessage newMessage)
+        {
+
+            foreach (User user in users)
+            {
+                if (user.Username.Equals(messagingUser.Username))
+                {
+                    user.PrivateMessages.Add(newMessage);
+                    //user.JoinedPrivateChats.Add(receivingUser.Username);
+                }
+                //adds the receiving user information to the messaging user
+
+                if (user.Username.Equals(receivingUser.Username))
+                {
+                    user.PrivateMessages.Add(newMessage);
+                    //user.JoinedPrivateChats.Add(messagingUser.Username);
+                }
+                //adds the messaging user's name to the receivings users list
+            }
+            SaveUserData();
+        }
+
         public List<ChatMessage> LoadChatHistory(ChatGroup chatGroup)
         {
 
@@ -283,27 +343,40 @@ namespace BusinessTierServer
             return new List<User>();
         }
 
-     /*
-    public List<ChatGroup> GetAllGroupChats()
+        public User getUser(String username)
         {
-            return chatGroups;
-        }
-
-        public List<string> GetUsersInChat(string chatName)
-        {
-            
-            // Find the chat group with the given name
-            var chatGroup = chatGroups.FirstOrDefault(c => c.Name == chatName);
-
-            if (chatGroup != null)
+            foreach (User user in users)
             {
-                return chatGroup.Members;
+                if (user.Username.Equals(username))
+                {
+                    return user;
+                }
+
             }
-            
-            return new List<string>(); // Return an empty list if the chat group is not found
+            return new User();
         }
-     */
-     
+
+        /*
+       public List<ChatGroup> GetAllGroupChats()
+           {
+               return chatGroups;
+           }
+
+           public List<string> GetUsersInChat(string chatName)
+           {
+
+               // Find the chat group with the given name
+               var chatGroup = chatGroups.FirstOrDefault(c => c.Name == chatName);
+
+               if (chatGroup != null)
+               {
+                   return chatGroup.Members;
+               }
+
+               return new List<string>(); // Return an empty list if the chat group is not found
+           }
+        */
+
     }
 }
  

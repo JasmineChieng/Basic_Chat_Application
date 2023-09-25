@@ -14,6 +14,8 @@ namespace UserDLL
 
         public List<ChatGroup> JoinedGroups { get; set; } = new List<ChatGroup>();
         public List<PrivateMessage> PrivateMessages { get; set; } = new List<PrivateMessage>();
+        public List<String> JoinedPrivateChats { get; set; } = new List<String>();
+        //we keep a string of the names users that this user private messaged
     }
 
 }

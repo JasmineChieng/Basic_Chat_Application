@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ChatApplication",
+    "\\ChatApplication\\ChatApp"
   ],
-  "SelectedNode": "\\jiayifile.txt",
-  "SelectedNode": "\\jasminefile.txt",
+  "SelectedNode": "\\ChatApplication\\ChatApp\\Page4.xaml",
   "PreviewInSolutionExplorer": false
 }

@@ -118,3 +118,5 @@ D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\ob
 D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.csproj.CopyComplete
 D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.exe
 D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\ChatApp.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Page5.g.cs
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\ChatApp\obj\Debug\Page5.baml

@@ -23,7 +23,8 @@ namespace BusinessTierServer
         // bool CreateGroupChat(ChatGroup chatGroup);
         bool CreateGroupChat(ChatGroup chatGroup,User user);
 
-
+        [OperationContract]
+        bool StartPrivateChat(User messagingUser, User receivingUser);
 
         [OperationContract]
         void SaveChatGroups();
@@ -33,6 +34,9 @@ namespace BusinessTierServer
 
         [OperationContract]
         void handleMessage(ChatGroup chatGroup,ChatMessage chatMessage);
+
+        [OperationContract]
+        void handlePrivateMessage(User messagingUser, User receivingUser, PrivateMessage newMessage);
 
         [OperationContract]
         void handleLeaveGroup(ChatGroup chatGroup, User user);
@@ -58,6 +62,10 @@ namespace BusinessTierServer
 
         [OperationContract]
         List<User> LoadUserData();
+
+
+        [OperationContract]
+        User getUser(String username);
 
     }
 }

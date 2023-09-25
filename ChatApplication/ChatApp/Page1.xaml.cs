@@ -125,6 +125,24 @@ namespace ChatApp
         {
             Button clickedButton = (Button)sender;
             string memberUsername = clickedButton.Content.ToString();
+            
+            User receivingUser = foob.getUser(memberUsername);
+            if(receivingUser != null)
+            {
+                Page5 memberPage = new Page5(user, receivingUser, foob);
+                foob.StartPrivateChat(user, receivingUser);
+                NavigationService.Navigate(memberPage);
+            }
+
+            
+            //ChatBox.NavigationService.Navigate(chatHistoryPage);
+            /*
+            if (clickedButton.Tag is ChatGroup selectedChatGroup)
+            {
+                Page1 chatHistoryPage = new Page1(user, selectedChatGroup, foob);
+                ChatBox.NavigationService.Navigate(chatHistoryPage);
+            }
+            */
         }
 
         private void leaveGroupBtn_Click(object sender, RoutedEventArgs e)

@@ -38,6 +38,60 @@ namespace ChatApp
 
             page3 = new Page3(this, user, foob);
             List<ChatGroup> groupList = user.JoinedGroups;
+            List<String> pmList = user.JoinedPrivateChats;
+/*
+            // ----------------test
+ 
+            User newUser = new User
+            {
+                Username = "Fake user name",
+
+
+
+            };
+            //pick the receiving user
+
+            PrivateMessage pm = new PrivateMessage
+            {
+                Sender = user,
+                Receiver = newUser,
+                Message = "Test Message 1",
+                Timestamp = DateTime.Now
+
+            };
+            //create a private message for each message sent
+
+            PrivateMessage pm2 = new PrivateMessage
+            {
+                Sender = user,
+                Receiver = newUser,
+                Message = "Test Message 2",
+                Timestamp = DateTime.Now
+            };
+
+            user.PrivateMessages.Add(pm);
+            user.PrivateMessages.Add(pm2);
+            newUser.PrivateMessages.Add(pm);
+            newUser.PrivateMessages.Add(pm2);
+            //remember to add to both sides
+
+            //ChatGroup privateChat = new PrivateChat();
+            // Create a pm object
+            PrivateChat newPM = new PrivateChat
+            {
+                Name = newUser.Username, //set as receiving users name
+
+
+            };
+            newPM.PrivateChatList.Add(user);
+            newPM.PrivateChatList.Add(newUser);
+            //private chat keeps track of the user and the receiving user (they should behave like group chats)
+            //add to private chat? or just add to user?
+            // --------
+            // 
+            groupList.Add(newPM);
+ 
+            */
             if (groupList != null)
             {
                 foreach (var content in groupList)
@@ -50,7 +104,16 @@ namespace ChatApp
                     // Add the loaded button to the ChatContainer
                     ChatContainer.Children.Add(groupButton);
                 }
+                
             }
+            /*
+            if(pmList != null)
+            {
+                foreach(var content in pmList)
+                {
+
+                }
+            }*/
         }
 
         private void createGroupBtn_Click(object sender, RoutedEventArgs e)

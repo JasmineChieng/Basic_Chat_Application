@@ -10,3 +10,9 @@ C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\
 C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.csproj.CoreCompileInputs.cache
 C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.dll
 C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\UserDLL\bin\Debug\UserDLL.dll
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\UserDLL\bin\Debug\UserDLL.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.csproj.AssemblyReference.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.csproj.CoreCompileInputs.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.dll
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\UserDLL\obj\Debug\UserDLL.pdb
