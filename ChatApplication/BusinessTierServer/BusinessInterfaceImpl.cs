@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using DatabaseServer;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -15,11 +17,27 @@ namespace BusinessTierServer
         private List<User> users = new List<User>();
         private List<ChatGroup> chatGroups = new List<ChatGroup>();
 
-        public BusinessInterfaceImpl()
+         public BusinessInterfaceImpl()
         {
             users = LoadUserData();
             chatGroups = LoadChatGroups();
         }
+
+        private ServerInterface foob;
+
+/*        public BusinessInterfaceImpl()
+        {
+
+            ChannelFactory<ServerInterface> foobFactory;
+            NetTcpBinding tcp = new NetTcpBinding();
+            //Set the URL and create the connection!
+            string URL = "net.tcp://localhost:8100/DataService";
+            foobFactory = new ChannelFactory<ServerInterface>(tcp, URL);
+            foob = foobFactory.CreateChannel();
+
+
+        }*/
+
         public bool RegisterUser(User user)
         {
             // Check if the username is already taken
