@@ -1,0 +1,23 @@
+[
+  {
+    "Username": "jas",
+    "Password": "jas123",
+    "JoinedGroups": [
+      {
+        "Name": "new group #1",
+        "IsPrivate": false,
+        "JoinCode": null,
+        "Members": [
+          {
+            "Username": "jas",
+            "Password": "jas123",
+            "JoinedGroups": [],
+            "PrivateMessages": []
+          }
+        ],
+        "ChatHistory": []
+      }
+    ],
+    "PrivateMessages": []
+  }
+]

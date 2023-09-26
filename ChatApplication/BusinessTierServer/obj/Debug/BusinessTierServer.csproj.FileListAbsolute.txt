@@ -27,3 +27,5 @@ C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication
 C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\BusinessTierServer\obj\Debug\BusinessTierServer.pdb
 C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\Newtonsoft.Json.dll
 C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\Newtonsoft.Json.xml

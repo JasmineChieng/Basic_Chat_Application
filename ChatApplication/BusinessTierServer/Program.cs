@@ -26,6 +26,7 @@ namespace BusinessTierServer
             host.AddServiceEndpoint(typeof(BusinessInterface), tcp, "net.tcp://0.0.0.0:8200/DataBusinessService");
             //And open the host for business!
             host.Open();
+            Console.WriteLine("Connected to the DatabaseServer.\n");
             Console.WriteLine("System Online");
             Console.ReadLine();
             //Don't forget to close the host after you're done!
