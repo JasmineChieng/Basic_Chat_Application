@@ -11,5 +11,9 @@ namespace UserDLL
     {
         public string Username { get; set; }
         public string Password { get; set; }
+
+        public List<ChatGroup> JoinedGroups { get; set; } = new List<ChatGroup>();
+        public List<PrivateMessage> PrivateMessages { get; set; } = new List<PrivateMessage>();
     }
+
 }

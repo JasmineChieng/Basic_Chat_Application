@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessTierServer;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,10 +23,11 @@ namespace ChatApp
     public partial class Window3 : Window
     {
         private List<User> userList = new List<User>();
-        public Window3()
+        private BusinessInterface foob;
+        public Window3(BusinessInterface foob)
         {
             InitializeComponent();
-            LoadUserData();
+            this.foob = foob;
         }
 
         private void registerBtn_Click(object sender, RoutedEventArgs e)
@@ -33,111 +35,47 @@ namespace ChatApp
             string username = usernameTB.Text;
             string password = passwordTB.Text;
             string retype_password = retype_pwTB.Text;
+            bool validated = false;
 
-            if(string.IsNullOrWhiteSpace(username) ||string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(retype_password))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(retype_password))
             {
-                MessageBox.Show("Please fill up all field");
-
+                MessageBox.Show("Please fill up all fields");
             }
-            else if(!retype_password.Equals(password))
+            else if (!retype_password.Equals(password))
             {
                 MessageBox.Show("Retype password must be equal to the password");
             }
-            else if(UserExists(username))
-            {
-                MessageBox.Show("Username already exists. Please try another username ");
-            }
             else
             {
-                MessageBox.Show("Registration Successful");
-
-                User user = new User();
-                user.Username = username;
-                user.Password = password;
-                
-                userList.Add(user);
-                SaveUserData();
-
-                MainWindow login = new MainWindow();
-                this.Visibility = Visibility.Hidden;
-                login.Show();
-
-                
-
+                validated = true;
             }
-        }
 
-        // Function to check if a username already exists in the userList
-        public bool UserExists(string username)
-        {
-            return userList.Any(user => user.Username == username);
-        }
-   // Function to get the userList
-        public List<User> GetUserList()
-        {
-            return userList;
-        }
-
-        public void SaveUserData()
-        {
-            try
+            if (validated)
             {
-                // Specify the file path where you want to save user data as text
-                string filePath = "userList.txt";
-
-                // Create a StreamWriter to write data to the file
-                using (StreamWriter writer = new StreamWriter(filePath))
+                // Create a User object
+                User newUser = new User
                 {
-                    foreach (User user in userList)
-                    {
-                        // Write user data as plain text in the format "Username,Password"
-                        writer.WriteLine($"{user.Username},{user.Password}");
-                    }
+                    Username = username,
+                    Password = password
+                };
+
+                // Call the service to register the user
+                bool registrationResult = foob.RegisterUser(newUser);
+
+                if (registrationResult)
+                {
+                    MessageBox.Show("Registration Successful");
+
+                    MainWindow login = new MainWindow();
+                    this.Visibility = Visibility.Hidden;
+                    login.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Username already exists. Please try another username");
                 }
             }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that may occur during file saving
-                // You can log the error or take appropriate action
-            }
-        }
 
-        public void LoadUserData()
-        {
-            try
-            {
-                // Specify the file path from where you want to load user data as text
-                string filePath = "userList.txt";
-
-                // Check if the file exists
-                if (File.Exists(filePath))
-                {
-                    // Create a StreamReader to read data from the file
-                    using (StreamReader reader = new StreamReader(filePath))
-                    {
-                        string line;
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            // Split the line into username and password
-                            string[] parts = line.Split(',');
-                            if (parts.Length == 2)
-                            {
-                                User user = new User
-                                {
-                                    Username = parts[0],
-                                    Password = parts[1]
-                                };
-                                userList.Add(user);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that may occur during file loading
-                // You can log the error or take appropriate action
-            }
         }
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)

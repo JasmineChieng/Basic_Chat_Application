@@ -1,0 +1,56 @@
+[
+  {
+    "Username": "shu",
+    "Password": "123",
+    "JoinedGroups": [
+      {
+        "Name": "testgroup",
+        "IsPrivate": true,
+        "JoinCode": "1234",
+        "Members": [
+          {
+            "Username": "test",
+            "Password": "123",
+            "JoinedGroups": [],
+            "PrivateMessages": []
+          },
+          {
+            "Username": "shu",
+            "Password": "123",
+            "JoinedGroups": [],
+            "PrivateMessages": []
+          }
+        ],
+        "ChatHistory": []
+      }
+    ],
+    "PrivateMessages": []
+  },
+  {
+    "Username": "test",
+    "Password": "123",
+    "JoinedGroups": [
+      {
+        "Name": "testgroup",
+        "IsPrivate": true,
+        "JoinCode": "1234",
+        "Members": [
+          {
+            "Username": "test",
+            "Password": "123",
+            "JoinedGroups": [],
+            "PrivateMessages": []
+          }
+        ],
+        "ChatHistory": []
+      }
+    ],
+    "PrivateMessages": []
+  },
+  {
+    "Username": "jas",
+    "Password": "jas123",
+    "JoinedGroups": [],
+    "PrivateMessages": []
+  }
+]

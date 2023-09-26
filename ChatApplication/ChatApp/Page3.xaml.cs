@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessTierServer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -27,16 +28,19 @@ namespace ChatApp
         private Window1 mainWindow;
         private List<ChatGroup> groupsList = new List<ChatGroup>();
         private Page4 page4;
+        private User user;
+        private BusinessInterface foob;
 
-        public Page3(Window1 window)
+        public Page3(Window1 window, User user, BusinessInterface foob)
         {
             InitializeComponent();
             this.mainWindow = window;
+            this.foob = foob;
             // Load data file
-            LoadGroupListFromFile();
-
+            groupsList = foob.LoadChatGroups();
             // Initialize Page4 and pass the groupsList
-            page4 = new Page4(groupsList);
+            page4 = new Page4(this, user, foob, mainWindow);
+            this.user = user;
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -60,9 +64,9 @@ namespace ChatApp
             var newGroup = new ChatGroup { Name = newGroupName, IsPrivate = isPrivate };
 
             // If the group is private and a join code is provided, set the join code
-            if (isPrivate) 
+            if (isPrivate)
             {
-                if(!string.IsNullOrWhiteSpace(joinCode))
+                if (!string.IsNullOrWhiteSpace(joinCode))
                 {
                     newGroup.JoinCode = joinCode;
                 }
@@ -70,132 +74,36 @@ namespace ChatApp
                 {
                     MessageBox.Show("Join Code cannot be empty");
                 }
-                
+
             }
 
-
+            foob.CreateGroupChat(newGroup, user);
             groupsList.Add(newGroup);
 
-            SaveGroupListToFile();
 
-            //  Button groupButton = GroupButton_UI(newGroupName);
+
             Button groupButton = GroupButton_UI(newGroup);
-            // Access the ChatContainer from Window1 and add the button to it
             if (mainWindow != null)
             {
                 StackPanel chatContainer = mainWindow.ChatContainer;
                 chatContainer.Children.Add(groupButton);
             }
 
-            // Add the click event handler for the newly created button
             groupButton.Click += (s, args) =>
             {
                 Button clickedButton = (Button)s;
                 string groupName = clickedButton.Content.ToString();
 
-                // Create an instance of the ChatHistoryPage and navigate to it
-                Page1 chatHistoryPage = new Page1();
-                chatHistoryPage.SetChatHistory(groupName); // Pass the group name to set chat history
+                Page1 chatHistoryPage = new Page1(mainWindow, user, newGroup, foob);
                 mainWindow.ChatBox.NavigationService.Navigate(chatHistoryPage);
             };
         }
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
-             Button clickedButton = (Button)sender;
-         string groupName = clickedButton.Content.ToString();
+            Button clickedButton = (Button)sender;
+            string groupName = clickedButton.Content.ToString();
 
-        }
-        private void SaveGroupListToFile()
-        {
-            try
-            {
-                // Specify the file path where you want to save the group list
-                string filePath = "groupList.txt";
-
-                // Create a list of strings to represent each ChatGroup
-                List<string> groupLines = new List<string>();
-
-                foreach (var group in groupsList)
-                {
-                    if (group.IsPrivate)
-                    {
-                        // For private groups, save the join code along with the name and private flag
-                        groupLines.Add($"{group.Name},{group.IsPrivate},{group.JoinCode}");
-                    }
-                    else
-                    {
-                        // For public groups, save only the name and private flag
-                        groupLines.Add($"{group.Name},{group.IsPrivate}");
-                    }
-                }
-
-                // Write the list of strings to the text file
-                System.IO.File.WriteAllLines(filePath, groupLines);
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that may occur during file saving
-                // You can log the error or take appropriate action
-            }
-        }
-
-        private void LoadGroupListFromFile()
-        {
-            try
-            {
-                // Specify the file path from where you want to load the group list
-                string filePath = "groupList.txt";
-
-                // Check if the file exists
-                if (System.IO.File.Exists(filePath))
-                {
-                    // Read all lines from the text file into a string array
-                    string[] lines = System.IO.File.ReadAllLines(filePath);
-
-                    // Clear the existing groups list
-                    groupsList.Clear();
-
-                    // Iterate through each line and split it into fields
-                    foreach (string line in lines)
-                    {
-                        string[] fields = line.Split(',');
-
-                        // Ensure that there is at least one field (Name)
-                        if (fields.Length >= 1)
-                        {
-                            // Parse the fields and create a ChatGroup object
-                            string groupName = fields[0];
-                            bool isPrivate = false; // Default to public group
-
-                            if (fields.Length >= 2)
-                            {
-                                isPrivate = Convert.ToBoolean(fields[1]);
-                            }
-
-                            ChatGroup chatGroup = new ChatGroup
-                            {
-                                Name = groupName,
-                                IsPrivate = isPrivate,
-                            };
-
-                            if (isPrivate && fields.Length >= 3)
-                            {
-                                // If it's a private group and there is a third field (JoinCode)
-                                chatGroup.JoinCode = fields[2];
-                            }
-
-                            // Add the ChatGroup object to the groupsList
-                            groupsList.Add(chatGroup);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that may occur during file loading
-                // You can log the error or take appropriate action
-            }
         }
 
 
@@ -205,6 +113,7 @@ namespace ChatApp
             get { return groupsList; }
         }
 
+
         public Button GroupButton_UI(ChatGroup group)
         {
             // Create a StackPanel to hold the text and image
@@ -213,10 +122,15 @@ namespace ChatApp
                 Orientation = Orientation.Horizontal
             };
 
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string imageRelativePath = "groupsLogo.png";
+            string imagePath = System.IO.Path.Combine(baseDirectory, imageRelativePath);
+
+
             // Create an Image control and set its properties
             Image image = new Image
             {
-                Source = new BitmapImage(new Uri("C:\\Users\\shuma\\source\\repos\\JasmineChieng\\Basic_Chat_Application\\ChatApplication\\ChatApp\\resources\\groupsLogo.png")), // Replace 'icon.png' with your image path
+                Source = new BitmapImage(new Uri(imagePath)), // Replace 'icon.png' with your image path
                 Width = 24,
                 Height = 24,
                 Margin = new Thickness(0, 0, 5, 0) // Optional margin to separate image and text
@@ -247,9 +161,14 @@ namespace ChatApp
                 // Add other customizations as needed
             };
 
+            // Set the Tag property of the button to the ChatGroup object
+            groupButton.Tag = group;
+
             groupButton.Click += GroupButton_Click; // Handle button click event
             return groupButton;
         }
+
+
 
     }
 }
