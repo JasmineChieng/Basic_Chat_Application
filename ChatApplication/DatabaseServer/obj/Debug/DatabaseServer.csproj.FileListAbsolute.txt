@@ -21,3 +21,5 @@ C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication
 C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\DatabaseServer\obj\Debug\DatabaseServer.pdb
 C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\Newtonsoft.Json.dll
 C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\Newtonsoft.Json.xml

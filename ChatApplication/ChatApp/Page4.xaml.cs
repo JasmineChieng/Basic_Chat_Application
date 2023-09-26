@@ -26,11 +26,13 @@ namespace ChatApp
         private User user;
         private BusinessInterface foob;
         private Window1 chatWindow;
-        public Page4(List<ChatGroup> groupsList,User user,BusinessInterface foob, Window1 chatWindow)
+        private Page3 page3;
+        public Page4(Page3 page3, User user, BusinessInterface foob, Window1 chatWindow)
         {
             InitializeComponent();
             this.user = user;
-            this.groupsList = groupsList;
+            this.page3 = page3;
+            groupsList = page3.GroupList;
             this.foob = foob;
             this.chatWindow = chatWindow;
 
@@ -82,11 +84,15 @@ namespace ChatApp
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(350) }); // Auto-sized column for the private label
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(60) }); // Auto-sized column for the join button
 
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string imageRelativePath = "privateIcon.png";
+            string imagePath = System.IO.Path.Combine(baseDirectory, imageRelativePath);
+
             // Create the Label for private groups
             Label privateLabel = new Label
             {
                 Content = "Private",
-                Background = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\shuma\\source\\repos\\JasmineChieng\\Basic_Chat_Application\\ChatApplication\\ChatApp\\resources\\privateIcon.png"))),
+                Background = new ImageBrush(new BitmapImage(new Uri(imagePath))),
                 Width = 20,
                 Height = 20,
                 Margin = new Thickness(2),
@@ -99,36 +105,59 @@ namespace ChatApp
             Grid.SetColumn(privateLabel, 0);       // Set the private label to the second column
             Grid.SetColumn(joinButton, 2);         // Set the join button to the third column
 
-           
-                // Add elements to the Grid
-                grid.Children.Add(groupNameTextBlock);
-                grid.Children.Add(privateLabel);
-                grid.Children.Add(joinButton);
+
+            // Add elements to the Grid
+            grid.Children.Add(groupNameTextBlock);
+            grid.Children.Add(privateLabel);
+            grid.Children.Add(joinButton);
             if (group.IsPrivate)
             {
                 privateLabel.Visibility = Visibility.Visible;
                 joinButton.Click += (s, args) =>
                 {
                     OpenJoinCodeDialog(group);
-            
+
                 };
             }
 
             else
             {
-                privateLabel.Visibility=Visibility.Collapsed; 
+                privateLabel.Visibility = Visibility.Collapsed;
                 // Handle the join button click event
                 joinButton.Click += (s, args) =>
                 {
-                    //user.JoinedGroups.Add(group);
-                    foob.JoinGroupChat(group, user);
-                    MessageBox.Show($"Joined group: {group.Name}");
-                   
+
+                    if (foob.JoinGroupChat(group, user))
+                    {
+                        MessageBox.Show($"Joined group: {group.Name}");
+                        //   chatWindow.refreshChatContainer(user);
+
+                        Button groupButton = page3.GroupButton_UI(group);
+                        if (chatWindow != null)
+                        {
+                            StackPanel chatContainer = chatWindow.ChatContainer;
+                            chatContainer.Children.Add(groupButton);
+                        }
+
+                        groupButton.Click += (ss, argss) =>
+                        {
+                            Button clickedButton = (Button)s;
+                            string groupName = clickedButton.Content.ToString();
+
+                            Page1 chatHistoryPage = new Page1(chatWindow, user, group, foob);
+                            chatWindow.ChatBox.NavigationService.Navigate(chatHistoryPage);
+                        };
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("You are already a member of this group chat.");
+                    }
 
                 };
             }
-          
-           
+
+
 
             // Add the Grid to the card container
             cardBorder.Child = grid;
@@ -136,13 +165,13 @@ namespace ChatApp
             // Add the card to Page 4
             Page4Container.Children.Add(cardBorder);
 
-         
+
 
         }
 
         private void OpenJoinCodeDialog(ChatGroup group)
         {
-            Window2  dialog = new Window2();
+            Window2 dialog = new Window2();
 
             if (dialog.ShowDialog() == true)
             {
@@ -153,9 +182,34 @@ namespace ChatApp
                 if (enteredCode == group.JoinCode)
                 {
                     // Implement join group functionality here
-                    foob.JoinGroupChat(group, user);
-                    MessageBox.Show($"Joined group: {group.Name}");
-                    
+
+                    if (foob.JoinGroupChat(group, user))
+                    {
+                        MessageBox.Show($"Joined group: {group.Name}");
+                        //  chatWindow.refreshChatContainer(user);
+                        Button groupButton = page3.GroupButton_UI(group);
+                        if (chatWindow != null)
+                        {
+                            StackPanel chatContainer = chatWindow.ChatContainer;
+                            chatContainer.Children.Add(groupButton);
+                        }
+
+                        groupButton.Click += (s, args) =>
+                        {
+                            Button clickedButton = (Button)s;
+                            string groupName = clickedButton.Content.ToString();
+
+                            Page1 chatHistoryPage = new Page1(chatWindow, user, group, foob);
+                            chatWindow.ChatBox.NavigationService.Navigate(chatHistoryPage);
+                        };
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("You are already a member of this group chat.");
+                    }
+
+
                 }
                 else
                 {

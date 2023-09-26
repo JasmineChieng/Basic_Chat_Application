@@ -19,5 +19,67 @@
       }
     ],
     "PrivateMessages": []
+  },
+  {
+    "Username": "shu",
+    "Password": "123",
+    "JoinedGroups": [
+      {
+        "Name": "new group #1",
+        "IsPrivate": false,
+        "JoinCode": null,
+        "Members": [
+          {
+            "Username": "jas",
+            "Password": "jas123",
+            "JoinedGroups": [],
+            "PrivateMessages": []
+          },
+          {
+            "Username": "shu",
+            "Password": "123",
+            "JoinedGroups": [],
+            "PrivateMessages": []
+          }
+        ],
+        "ChatHistory": []
+      },
+      {
+        "Name": "testing123",
+        "IsPrivate": true,
+        "JoinCode": "1234",
+        "Members": [
+          {
+            "Username": "shu",
+            "Password": "123",
+            "JoinedGroups": [
+              {
+                "Name": "new group #1",
+                "IsPrivate": false,
+                "JoinCode": null,
+                "Members": [
+                  {
+                    "Username": "jas",
+                    "Password": "jas123",
+                    "JoinedGroups": [],
+                    "PrivateMessages": []
+                  },
+                  {
+                    "Username": "shu",
+                    "Password": "123",
+                    "JoinedGroups": [],
+                    "PrivateMessages": []
+                  }
+                ],
+                "ChatHistory": []
+              }
+            ],
+            "PrivateMessages": []
+          }
+        ],
+        "ChatHistory": []
+      }
+    ],
+    "PrivateMessages": []
   }
 ]

@@ -11,5 +11,14 @@ namespace UserDLL
         public String Sender { get; set; }
         public string Message { get; set; }
         public DateTime Timestamp { get; set; }
+
+        public List<FileAttachment> Attachments { get; set; } // List of file attachments
+
+        public ChatMessage()
+        {
+            Attachments = new List<FileAttachment>();
+        }
+
+
     }
 }

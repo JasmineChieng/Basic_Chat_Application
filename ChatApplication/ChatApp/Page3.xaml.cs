@@ -39,7 +39,7 @@ namespace ChatApp
             // Load data file
             groupsList = foob.LoadChatGroups();
             // Initialize Page4 and pass the groupsList
-            page4 = new Page4(groupsList, user,foob,mainWindow);
+            page4 = new Page4(this, user, foob, mainWindow);
             this.user = user;
         }
 
@@ -64,9 +64,9 @@ namespace ChatApp
             var newGroup = new ChatGroup { Name = newGroupName, IsPrivate = isPrivate };
 
             // If the group is private and a join code is provided, set the join code
-            if (isPrivate) 
+            if (isPrivate)
             {
-                if(!string.IsNullOrWhiteSpace(joinCode))
+                if (!string.IsNullOrWhiteSpace(joinCode))
                 {
                     newGroup.JoinCode = joinCode;
                 }
@@ -74,12 +74,12 @@ namespace ChatApp
                 {
                     MessageBox.Show("Join Code cannot be empty");
                 }
-                
+
             }
-            
-            foob.CreateGroupChat(newGroup,user);
-           groupsList.Add(newGroup);
-         
+
+            foob.CreateGroupChat(newGroup, user);
+            groupsList.Add(newGroup);
+
 
 
             Button groupButton = GroupButton_UI(newGroup);
@@ -94,19 +94,19 @@ namespace ChatApp
                 Button clickedButton = (Button)s;
                 string groupName = clickedButton.Content.ToString();
 
-                Page1 chatHistoryPage = new Page1(user,newGroup,foob);
+                Page1 chatHistoryPage = new Page1(mainWindow, user, newGroup, foob);
                 mainWindow.ChatBox.NavigationService.Navigate(chatHistoryPage);
             };
         }
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
-             Button clickedButton = (Button)sender;
-         string groupName = clickedButton.Content.ToString();
+            Button clickedButton = (Button)sender;
+            string groupName = clickedButton.Content.ToString();
 
         }
-        
-     
+
+
 
         public List<ChatGroup> GroupList
         {
@@ -122,10 +122,15 @@ namespace ChatApp
                 Orientation = Orientation.Horizontal
             };
 
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string imageRelativePath = "groupsLogo.png";
+            string imagePath = System.IO.Path.Combine(baseDirectory, imageRelativePath);
+
+
             // Create an Image control and set its properties
             Image image = new Image
             {
-                Source = new BitmapImage(new Uri("C:\\Users\\shuma\\source\\repos\\JasmineChieng\\Basic_Chat_Application\\ChatApplication\\ChatApp\\resources\\groupsLogo.png")), // Replace 'icon.png' with your image path
+                Source = new BitmapImage(new Uri(imagePath)), // Replace 'icon.png' with your image path
                 Width = 24,
                 Height = 24,
                 Margin = new Thickness(0, 0, 5, 0) // Optional margin to separate image and text
@@ -162,6 +167,8 @@ namespace ChatApp
             groupButton.Click += GroupButton_Click; // Handle button click event
             return groupButton;
         }
-        
+
+
+
     }
 }
