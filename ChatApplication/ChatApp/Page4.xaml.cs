@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessTierServer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,10 +23,16 @@ namespace ChatApp
     public partial class Page4 : Page
     {
         private List<ChatGroup> groupsList = new List<ChatGroup>();
-        public Page4(List<ChatGroup> groupsList)
+        private User user;
+        private BusinessInterface foob;
+        private Window1 chatWindow;
+        public Page4(List<ChatGroup> groupsList,User user,BusinessInterface foob, Window1 chatWindow)
         {
             InitializeComponent();
+            this.user = user;
             this.groupsList = groupsList;
+            this.foob = foob;
+            this.chatWindow = chatWindow;
 
             // Clear the existing content of the container
             Page4Container.Children.Clear();
@@ -113,7 +120,10 @@ namespace ChatApp
                 // Handle the join button click event
                 joinButton.Click += (s, args) =>
                 {
+                    //user.JoinedGroups.Add(group);
+                    foob.JoinGroupChat(group, user);
                     MessageBox.Show($"Joined group: {group.Name}");
+                   
 
                 };
             }
@@ -143,7 +153,9 @@ namespace ChatApp
                 if (enteredCode == group.JoinCode)
                 {
                     // Implement join group functionality here
+                    foob.JoinGroupChat(group, user);
                     MessageBox.Show($"Joined group: {group.Name}");
+                    
                 }
                 else
                 {
@@ -152,6 +164,8 @@ namespace ChatApp
                 }
             }
         }
+
+
 
     }
 }

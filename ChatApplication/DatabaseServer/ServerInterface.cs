@@ -11,7 +11,7 @@ using UserDLL;
 namespace DatabaseServer
 {
     [ServiceContract]
-    internal interface ServerInterface
+    public interface ServerInterface
     {
         [OperationContract]
         bool RegisterUser(User user);
