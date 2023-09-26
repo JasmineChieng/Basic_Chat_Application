@@ -1,0 +1,18 @@
+﻿<Page x:Class="ChatApp.Page2"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ChatApp"
+      mc:Ignorable="d" 
+      d:DesignHeight="430" d:DesignWidth="600"
+      Title="Page2">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="60px" Margin="195,178,195,0">
+            <Image Source="C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\ChatApp\resources\warningIcon.png" Width="30" Height="30" Margin="0,0,5,0" RenderTransformOrigin="-0.907,0.68" />
+            <Label Content="Select a chat!" VerticalAlignment="Center" Width="127" FontFamily="Segoe UI Semibold" FontSize="18" />
+        </StackPanel>
+
+    </Grid>
+</Page>

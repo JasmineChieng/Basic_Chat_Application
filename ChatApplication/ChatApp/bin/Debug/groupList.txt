@@ -1,0 +1,2 @@
+Group1,True,123
+Group2,False
