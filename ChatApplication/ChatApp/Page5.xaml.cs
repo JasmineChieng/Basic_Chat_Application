@@ -35,14 +35,27 @@ namespace ChatApp
         public Page5(User messagingUser, User receivingUser, BusinessInterface foob)
         {
             InitializeComponent();
+
+            // Load chat history for the specified privateChat
+            List<PrivateMessage> tempPMList = messagingUser.PrivateMessages;
+
+            List<PrivateMessage> privateChatHistory = new List<PrivateMessage>();
+            foreach(PrivateMessage pm in privateChatHistory)
+            {
+                if(pm.Receiver.Username.Equals(receivingUser.Username)) 
+                {
+                    privateChatHistory.Add(pm);
+                }
+            }
+
             chatListBox.ItemsSource = privateMessages;
             this.messagingUser = messagingUser;
             this.receivingUser = receivingUser;
             //this.chatgroup = chatgroup;
             this.foob = foob;
 
-            // Load chat history for the specified ChatGroup
-            List<PrivateMessage> privateChatHistory = messagingUser.PrivateMessages;
+            // Load chat history for the specified privateChat
+            //List<PrivateMessage> privateChatHistory = messagingUser.PrivateMessages;
 
             // Add the loaded chat history messages to the chatMessages ObservableCollection
             foreach (var message in privateChatHistory)
@@ -76,7 +89,7 @@ namespace ChatApp
                 PrivateMessage newMessage = new PrivateMessage
                 {
                     Sender = messagingUser.Username,
-                    Receiver = receivingUser,
+                    ReceiverName = receivingUser.Username,
                     Message = userMessage,
                     Timestamp = DateTime.Now
                 };

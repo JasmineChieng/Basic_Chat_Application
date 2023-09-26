@@ -25,9 +25,13 @@ namespace ChatApp
     {
 
         private ObservableCollection<ChatMessage> chatMessages = new ObservableCollection<ChatMessage>();
-        private User user;
+        private User user; // messaging user
         private ChatGroup chatgroup;
         BusinessInterface foob;
+
+        // for second constructor user
+        private User receivingUser;
+        private ObservableCollection<PrivateMessage> privateMessagesCollection = new ObservableCollection<PrivateMessage>();
 
         public Page1(User user,ChatGroup chatgroup,BusinessInterface foob)
         {
@@ -51,6 +55,59 @@ namespace ChatApp
 
             // Call the method to populate the sidePanel with member buttons
             PopulateSidePanelWithMemberButtons();
+        }
+
+        //Overloaded constructor to create second type of page 1, for private messaging
+        public Page1(User messagingUser, User receivingUser, BusinessInterface foob)
+        {
+            InitializeComponent();
+
+            List<PrivateMessage> tempPMList = messagingUser.PrivateMessages;
+            //List of private messages that the current user has sent before
+            List<PrivateMessage> privateChatHistory = new List<PrivateMessage>();
+            //List of private messages that is between the messaging and receiving user
+
+            bool isTempEmpty = !tempPMList.Any();
+            if (!isTempEmpty)
+            {//if there are existing messages
+                foreach (PrivateMessage pm in tempPMList)
+                {
+                    //for each message sent in the message list of current user, we do:
+                    if (pm.ReceiverName != null)
+                    {
+                        if (pm.ReceiverName.Equals(receivingUser.Username))
+                        {
+                            //if the name of the receiver in the pm is the same as the name of the receiving user object we receive, do:
+                            privateChatHistory.Add(pm);
+                            //add the pm to privateChat history
+                        }
+                    }
+                }
+            }
+
+            chatListBox.ItemsSource = privateMessagesCollection; //set item source to the view only collection
+            this.user = messagingUser;
+            this.receivingUser = receivingUser;
+            this.foob = foob;
+
+
+            // Add the filtered messages to the ObservableCollection
+            bool isHistoryEmpty = !privateChatHistory.Any();
+            if (!isHistoryEmpty)
+            {
+                foreach (var message in privateChatHistory)
+                {
+                    privateMessagesCollection.Add(message);
+                }
+            }
+            // Load the chat group's members first
+            //LoadChatGroupMembers();
+
+            // Call the method to populate the sidePanel with member buttons
+            //PopulateSidePanelWithMemberButtons();
+
+            sendBtn.Click -= sendBtn_Click;
+            sendBtn.Click += sendPMBtn_Click;
         }
 
         private void LoadChatGroupMembers()
@@ -79,6 +136,30 @@ namespace ChatApp
                 messageTB.Clear(); // Clear the message input field
 
                 foob.handleMessage(chatgroup, newMessage);
+            }
+
+        }
+
+        //same as normal send, but for PM
+        private void sendPMBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Create a new chat message when the Send button is clicked
+            string userMessage = messageTB.Text;
+
+            if (!string.IsNullOrWhiteSpace(userMessage))
+            {
+                PrivateMessage newMessage = new PrivateMessage
+                {
+                    Sender = user.Username,
+                    ReceiverName = receivingUser.Username,
+                    Message = userMessage,
+                    Timestamp = DateTime.Now
+                };
+
+                privateMessagesCollection.Add(newMessage);
+                messageTB.Clear(); // Clear the message input field
+
+                foob.handlePrivateMessage(user, receivingUser, newMessage);
             }
 
         }
@@ -125,13 +206,19 @@ namespace ChatApp
         {
             Button clickedButton = (Button)sender;
             string memberUsername = clickedButton.Content.ToString();
-            
-            User receivingUser = foob.getUser(memberUsername);
-            if(receivingUser != null)
+
+            if (!memberUsername.Equals(user.Username)) //only run if the user we are looking at is not the the current user
             {
-                Page5 memberPage = new Page5(user, receivingUser, foob);
-                foob.StartPrivateChat(user, receivingUser);
-                NavigationService.Navigate(memberPage);
+                User receivingUser = foob.getUser(memberUsername); //retrieve the user from the user list
+                if (receivingUser != null) //if it is not empty (meaning we managed to retrieve it)
+                {
+                    Page1 memberPage = new Page1(user, receivingUser, foob);
+                    //if (foob.StartPrivateChat(user, receivingUser))
+                    //{
+                        //change this to start or add
+                        NavigationService.Navigate(memberPage);
+                    //}
+                }
             }
 
             

@@ -9,9 +9,11 @@ namespace UserDLL
     public class PrivateMessage
     {
         public String Sender { get; set; }
-        public User Receiver { get; set; }
+        public User Receiver { get; set; }      
         public string Message { get; set; }
         public DateTime Timestamp { get; set; }
+
+        public String ReceiverName { get; set; }
     }
 
 

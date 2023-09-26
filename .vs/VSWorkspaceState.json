@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\ChatApplication",
-    "\\ChatApplication\\ChatApp"
+    "\\ChatApplication\\ChatApp",
+    "\\ChatApplication\\ChatApp\\bin",
+    "\\ChatApplication\\ChatApp\\bin\\Debug"
   ],
-  "SelectedNode": "\\ChatApplication\\ChatApp\\Page4.xaml",
+  "SelectedNode": "\\ChatApplication\\ChatApp\\Page3.xaml.cs",
   "PreviewInSolutionExplorer": false
 }
