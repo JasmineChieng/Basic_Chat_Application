@@ -73,9 +73,9 @@ namespace ChatApp
                 foreach (PrivateMessage pm in tempPMList)
                 {
                     //for each message sent in the message list of current user, we do:
-                    if (pm.ReceiverName != null)
+                    if ((pm.ReceiverName != null)&&pm.Sender != null)
                     {
-                        if (pm.ReceiverName.Equals(receivingUser.Username))
+                        if (pm.ReceiverName.Equals(receivingUser.Username)||(pm.Sender.Equals(receivingUser.Username)))
                         {
                             //if the name of the receiver in the pm is the same as the name of the receiving user object we receive, do:
                             privateChatHistory.Add(pm);
