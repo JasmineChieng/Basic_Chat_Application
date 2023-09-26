@@ -1,22 +1,33 @@
 [
   {
-    "Name": "123",
-    "IsPrivate": false,
-    "JoinCode": null,
+    "Name": "testgroup",
+    "IsPrivate": true,
+    "JoinCode": "1234",
     "Members": [
-      {
-        "Username": "shu",
-        "Password": "123",
-        "JoinedGroups": [],
-        "PrivateMessages": []
-      },
       {
         "Username": "test",
         "Password": "123",
         "JoinedGroups": [],
         "PrivateMessages": []
+      },
+      {
+        "Username": "shu",
+        "Password": "123",
+        "JoinedGroups": [],
+        "PrivateMessages": []
       }
     ],
-    "ChatHistory": []
+    "ChatHistory": [
+      {
+        "Sender": "shu",
+        "Message": "HIIII",
+        "Timestamp": "0001-01-01T00:00:00"
+      },
+      {
+        "Sender": "test",
+        "Message": "HELLO",
+        "Timestamp": "0001-01-01T00:00:00"
+      }
+    ]
   }
 ]

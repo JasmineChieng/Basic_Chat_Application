@@ -35,47 +35,39 @@ namespace ChatApp
             string username = usernameTB.Text;
             string password = passwordTB.Text;
             string retype_password = retype_pwTB.Text;
-            bool validated = false;
 
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(retype_password))
+            // Create a User object
+            User newUser = new User
             {
-                MessageBox.Show("Please fill up all fields");
+                Username = username,
+                Password = password
+            };
+            // Call the service to register the user
+            bool registrationResult = foob.RegisterUser(newUser);
+
+            if (string.IsNullOrWhiteSpace(username) ||string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(retype_password))
+            {
+                MessageBox.Show("Please fill up all field");
+
             }
-            else if (!retype_password.Equals(password))
+            else if(!retype_password.Equals(password))
             {
                 MessageBox.Show("Retype password must be equal to the password");
             }
-            else
+            else if (registrationResult)
             {
-                validated = true;
-            }
+                MessageBox.Show("Registration Successful");
 
-            if (validated)
+                MainWindow login = new MainWindow();
+                this.Visibility = Visibility.Hidden;
+                login.Show();
+            }
+            else if(!registrationResult)
             {
-                // Create a User object
-                User newUser = new User
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                // Call the service to register the user
-                bool registrationResult = foob.RegisterUser(newUser);
-
-                if (registrationResult)
-                {
-                    MessageBox.Show("Registration Successful");
-
-                    MainWindow login = new MainWindow();
-                    this.Visibility = Visibility.Hidden;
-                    login.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Username already exists. Please try another username");
-                }
+                MessageBox.Show("Username already exists. Please try another username ");
+               
             }
-
+      
         }
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -38,14 +37,6 @@ namespace ChatApp
             ChatBox.NavigationService.Navigate(defaultPage);
 
             page3 = new Page3(this, user, foob);
-            refreshChatContainer(user);
-          
-        }
-
-        public void refreshChatContainer(User user)
-        {
-           
-            ChatContainer.Children.Clear();
             List<ChatGroup> groupList = user.JoinedGroups;
             if (groupList != null)
             {
@@ -61,6 +52,7 @@ namespace ChatApp
                 }
             }
         }
+
         private void createGroupBtn_Click(object sender, RoutedEventArgs e)
         {
             ChatBox.Content = new Page3(this,user,foob);
@@ -69,7 +61,7 @@ namespace ChatApp
         private void viewGroupBtn_Click(object sender, RoutedEventArgs e)
         {
             page3 = new Page3(this,user, foob);
-            ChatBox.Content = new Page4(page3,user,foob,this);
+            ChatBox.Content = new Page4(page3.GroupList,user,foob,this);
         }
 
         private void Page3_GroupButton_Click(object sender, RoutedEventArgs e)
@@ -78,8 +70,12 @@ namespace ChatApp
             // Retrieve the ChatGroup object from the Tag property
             if (clickedButton.Tag is ChatGroup selectedChatGroup)
             {
-                Page1 chatHistoryPage = new Page1(this,user, selectedChatGroup,foob);
+                Page1 chatHistoryPage = new Page1(user, selectedChatGroup,foob);
                 ChatBox.NavigationService.Navigate(chatHistoryPage);
+            }
+            else
+            {
+            
             }
         }
 

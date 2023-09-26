@@ -21,13 +21,7 @@
                     <DataTemplate>
                         <StackPanel>
                             <TextBlock Text="{Binding Sender}" HorizontalAlignment="Left" Foreground="Blue" />
-                            <TextBlock Text="{Binding Message}">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <EventSetter Event="MouseLeftButtonDown" Handler="TextBlock_MouseLeftButtonDown" />
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
+                            <TextBlock Text="{Binding Message}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -42,7 +36,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBox x:Name="messageTB" Grid.Column="0" Width="380" AcceptsReturn="True" TextWrapping="Wrap" Grid.ColumnSpan="2" Margin="40,0,180,0"  />
                 <Button x:Name="sendBtn" Grid.Column="1" Content="SEND" Width="70"  Click="sendBtn_Click" Margin="436,0,94,0" RenderTransformOrigin="0.306,0.488"  />
-                <Button x:Name="sendFileBtn" Grid.Column="1" Content="FILES" Width="64" RenderTransformOrigin="1.749,0.589" Margin="511,0,25,0" Click="sendFileBtn_Click"  />
+                <Button Grid.Column="1" Content="Button 2" Width="64" RenderTransformOrigin="1.749,0.589" Margin="511,0,25,0"  />
 
             </Grid>
         </StackPanel>

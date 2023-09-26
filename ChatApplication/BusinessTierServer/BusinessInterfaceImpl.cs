@@ -3,15 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using UserDLL;
-using static System.Net.Mime.MediaTypeNames;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO.Compression;
 
 namespace BusinessTierServer
 {
@@ -57,8 +52,6 @@ namespace BusinessTierServer
             { return user; }
             return null;
         }
-
-
         public bool CreateGroupChat(ChatGroup chatGroup, User user)
         {
             // Check if the chat group name is unique
@@ -87,88 +80,45 @@ namespace BusinessTierServer
             return true; // Chat group creation successful
         }
 
-        
         public bool JoinGroupChat(ChatGroup chatGroup, User user)
         {
-            bool isUserAlreadyMember = user.JoinedGroups.Any(group => group.Name == chatGroup.Name);
-            if (!isUserAlreadyMember)
+            // Find the chat group with the given name
+            var targetChatGroup = chatGroups.FirstOrDefault(c => c.Name == chatGroup.Name);
+
+            if (targetChatGroup != null)
             {
-                // Find the chat group with the given name
-                var targetChatGroup = chatGroups.FirstOrDefault(c => c.Name == chatGroup.Name);
 
-
-                if (targetChatGroup != null)
+                // Check if the user is already a member of the group
+                if (!targetChatGroup.Members.Contains(user))
                 {
-
-                    // Check if the user is already a member of the group
-                    if (!targetChatGroup.Members.Contains(user))
-                    {
-                        targetChatGroup.Members.Add(user);
-                        // Update the JoinedGroups list for all users
-
-                    }
-
-                    foreach (User u in users)
-                    {
-                        if (u.Username.Equals(user.Username))
-                        {
-                            u.JoinedGroups.Add(targetChatGroup);
-                        }
-
-                    }
-
-
-                    // Save the modified chat groups list to the file
-                    SaveChatGroups();
-
-                    // Save the modified user list to the file
-                    SaveUserData();
-
-                    return true;
+                    targetChatGroup.Members.Add(user);
+                    // Update the JoinedGroups list for all users
+                
                 }
+
+                foreach (User u in users)
+                {
+                    if (u.Username.Equals(user.Username))
+                    {
+                        u.JoinedGroups.Add(targetChatGroup);
+                    }
+
+                }
+
+
+                // Save the modified chat groups list to the file
+                SaveChatGroups();
+
+                // Save the modified user list to the file
+                SaveUserData();
+
+                return true;
             }
 
 
 
             return false; // Chat group not found
         }
-
-        /*
-        public bool JoinGroupChat(ChatGroup chatGroup, User user)
-        {
-            // Check if the user has already joined the specific group
-            bool isUserAlreadyMember = user.JoinedGroups.Any(group => group.Name == chatGroup.Name);
-
-            if (!isUserAlreadyMember)
-            {
-                // Find the chat group with the given name
-                var targetChatGroup = chatGroups.FirstOrDefault(c => c.Name == chatGroup.Name);
-
-                if (targetChatGroup != null)
-                {
-                    targetChatGroup.Members.Add(user);
-
-                    // Update the JoinedGroups list for the user
-                    user.JoinedGroups.Add(targetChatGroup);
-
-                    // Save the modified chat groups list to the file
-                    SaveChatGroups();
-
-                    // Save the modified user list to the file
-                    SaveUserData();
-
-                    return true;
-                }
-            }
-
-            return false; // Chat group not found or user already a member
-        }
-        */
-       
-
-
-
-
 
         // Method to save chat groups to a JSON file
         public void SaveChatGroups()
@@ -187,7 +137,6 @@ namespace BusinessTierServer
             {
                 // Handle any exceptions that may occur during file saving
                 // You can log the error or take appropriate action
-                Console.WriteLine("Error saving chat data: " + ex.Message);
             }
         }
 
@@ -234,7 +183,6 @@ namespace BusinessTierServer
             {
                 // Handle any exceptions that may occur during file saving
                 // You can log the error or take appropriate action
-                Console.WriteLine("Error saving user data: " + ex.Message);
             }
         }
 
@@ -264,58 +212,19 @@ namespace BusinessTierServer
             return new List<User>(); // Return an empty list if the file doesn't exist or there's an error
         }
 
-        public void handleMessage(ChatGroup chatGroup, ChatMessage newMessage)
+        public void handleMessage(ChatGroup chatGroup,ChatMessage newMessage)
         {
             foreach (ChatGroup c in chatGroups)
             {
                 if (c.Name.Equals(chatGroup.Name))
                 {
-                    foreach (FileAttachment attachment in newMessage.Attachments)
-                    {
-                        if (attachment.isCompressed)
-                        {
-                            // Decompress the compressed data
-                            attachment.FileData = DecompressData(attachment.FileData);
-                        }
-                    }
-
-                    // Add the message to the chat history
-                    c.ChatHistory.Add(newMessage);
+                   c.ChatHistory.Add(newMessage);
                 }
+
             }
+
 
             SaveChatGroups();
-        }
-
-
-        // Compress the file data
-        public byte[] CompressData(byte[] data)
-        {
-            using (MemoryStream output = new MemoryStream())
-            {
-                using (GZipStream gzipStream = new GZipStream(output, CompressionMode.Compress))
-                {
-                    gzipStream.Write(data, 0, data.Length);
-                }
-                return output.ToArray();
-            }
-        }
-
-        // Decompress the compressed data
-        public byte[] DecompressData(byte[] compressedData)
-        {
-            using (MemoryStream input = new MemoryStream(compressedData))
-            using (GZipStream gzipStream = new GZipStream(input, CompressionMode.Decompress))
-            using (MemoryStream output = new MemoryStream())
-            {
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = gzipStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    output.Write(buffer, 0, bytesRead);
-                }
-                return output.ToArray();
-            }
         }
 
         public List<ChatMessage> LoadChatHistory(ChatGroup chatGroup)
@@ -336,77 +245,31 @@ namespace BusinessTierServer
             }
         }
 
-        public bool handleLeaveGroup(ChatGroup chatgroup, User user)
+        public void handleLeaveGroup(ChatGroup chatgroup, User user)
         {
-            if (chatgroup != null && user != null)
+            foreach (ChatGroup c in chatGroups)
             {
-                foreach (ChatGroup c in chatGroups)
+                if (c.Name.Equals(chatgroup.Name))
                 {
-                    if (c.Name.Equals(chatgroup.Name))
-                    {
-                        // Use a separate list to collect members for removal
-                        List<User> usersToRemove = new List<User>();
-
-                        foreach (User u in c.Members)
-                        {
-                            if (u.Username.Equals(user.Username))
-                            {
-                                // Add the user to the removal list
-                                usersToRemove.Add(u);
-                            }
-                        }
-
-                        // Remove the collected users from the group
-                        foreach (User u in usersToRemove)
-                        {
-                            c.Members.Remove(u);
-                        }
-
-
-                        
-                    }
+                    c.Members.Remove(user);
                 }
-                foreach (User u in users)
-                {
-                    if (u.Username.Equals(user.Username))
-                    {
-                        // Use a separate list to collect members for removal
-                        List<ChatGroup> groupToRemove = new List<ChatGroup>();
-
-                        foreach (ChatGroup c in u.JoinedGroups)
-                        {
-                            if (c.Name.Equals(chatgroup.Name))
-                            {
-                                // Add the user to the removal list
-                                groupToRemove.Add(c);
-                            }
-                        }
-
-                        // Remove the collected users from the group
-                        foreach (ChatGroup c in groupToRemove)
-                        {
-                            u.JoinedGroups.Remove(c);
-                        }
-
-
-                        
-                    }
-                }
-                // Save the modified chat groups list to the file
-                SaveChatGroups();
-
-                // Save the modified user list to the file
-                SaveUserData();
-                return true;
 
             }
-            else
+
+            foreach (User u in users)
             {
-                // Handle cases where the group or user is not found
+                if (u.Username.Equals(user.Username))
+                {
+                    u.JoinedGroups.Remove(chatgroup);
+                }
+
             }
 
-            return false;
+            SaveChatGroups();
+            SaveUserData();
+
         }
+
         public List<User> LoadChatGroupMembers(ChatGroup chatgroup)
         {
             foreach (ChatGroup c in chatGroups)

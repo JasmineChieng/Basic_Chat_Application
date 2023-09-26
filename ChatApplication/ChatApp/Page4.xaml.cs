@@ -26,13 +26,11 @@ namespace ChatApp
         private User user;
         private BusinessInterface foob;
         private Window1 chatWindow;
-        private Page3 page3;
-        public Page4(Page3 page3,User user,BusinessInterface foob, Window1 chatWindow)
+        public Page4(List<ChatGroup> groupsList,User user,BusinessInterface foob, Window1 chatWindow)
         {
             InitializeComponent();
             this.user = user;
-            this.page3 = page3;
-            groupsList = page3.GroupList;
+            this.groupsList = groupsList;
             this.foob = foob;
             this.chatWindow = chatWindow;
 
@@ -122,34 +120,11 @@ namespace ChatApp
                 // Handle the join button click event
                 joinButton.Click += (s, args) =>
                 {
-    
-                    if(foob.JoinGroupChat(group, user))
-                    {
-                         MessageBox.Show($"Joined group: {group.Name}");
-                      //   chatWindow.refreshChatContainer(user);
+                    //user.JoinedGroups.Add(group);
+                    foob.JoinGroupChat(group, user);
+                    MessageBox.Show($"Joined group: {group.Name}");
+                   
 
-                        Button groupButton = page3.GroupButton_UI(group);
-                        if (chatWindow != null)
-                        {
-                            StackPanel chatContainer = chatWindow.ChatContainer;
-                            chatContainer.Children.Add(groupButton);
-                        }
-
-                        groupButton.Click += (ss, argss) =>
-                        {
-                            Button clickedButton = (Button)s;
-                            string groupName = clickedButton.Content.ToString();
-
-                            Page1 chatHistoryPage = new Page1(chatWindow,user, group, foob);
-                            chatWindow.ChatBox.NavigationService.Navigate(chatHistoryPage);
-                        };
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("You are already a member of this group chat.");
-                    }
-                
                 };
             }
           
@@ -178,34 +153,9 @@ namespace ChatApp
                 if (enteredCode == group.JoinCode)
                 {
                     // Implement join group functionality here
-
-                    if (foob.JoinGroupChat(group, user))
-                    {
-                        MessageBox.Show($"Joined group: {group.Name}");
-                        //  chatWindow.refreshChatContainer(user);
-                        Button groupButton = page3.GroupButton_UI(group);
-                        if (chatWindow != null)
-                        {
-                            StackPanel chatContainer = chatWindow.ChatContainer;
-                            chatContainer.Children.Add(groupButton);
-                        }
-
-                        groupButton.Click += (s, args) =>
-                        {
-                            Button clickedButton = (Button)s;
-                            string groupName = clickedButton.Content.ToString();
-
-                            Page1 chatHistoryPage = new Page1(chatWindow,user, group, foob);
-                            chatWindow.ChatBox.NavigationService.Navigate(chatHistoryPage);
-                        };
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("You are already a member of this group chat.");
-                    }
-                   
-
+                    foob.JoinGroupChat(group, user);
+                    MessageBox.Show($"Joined group: {group.Name}");
+                    
                 }
                 else
                 {

@@ -39,7 +39,7 @@ namespace ChatApp
             // Load data file
             groupsList = foob.LoadChatGroups();
             // Initialize Page4 and pass the groupsList
-            page4 = new Page4(this, user,foob,mainWindow);
+            page4 = new Page4(groupsList, user,foob,mainWindow);
             this.user = user;
         }
 
@@ -94,7 +94,7 @@ namespace ChatApp
                 Button clickedButton = (Button)s;
                 string groupName = clickedButton.Content.ToString();
 
-                Page1 chatHistoryPage = new Page1(mainWindow,user,newGroup,foob);
+                Page1 chatHistoryPage = new Page1(user,newGroup,foob);
                 mainWindow.ChatBox.NavigationService.Navigate(chatHistoryPage);
             };
         }
@@ -162,8 +162,6 @@ namespace ChatApp
             groupButton.Click += GroupButton_Click; // Handle button click event
             return groupButton;
         }
-
-
         
     }
 }

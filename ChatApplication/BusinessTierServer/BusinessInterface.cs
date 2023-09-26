@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -24,10 +23,8 @@ namespace BusinessTierServer
         // bool CreateGroupChat(ChatGroup chatGroup);
         bool CreateGroupChat(ChatGroup chatGroup,User user);
 
-        [OperationContract]
-        byte[] CompressData(byte[] data);
-        [OperationContract]
-        byte[] DecompressData(byte[] compressedData);
+
+
         [OperationContract]
         void SaveChatGroups();
 
@@ -37,9 +34,8 @@ namespace BusinessTierServer
         [OperationContract]
         void handleMessage(ChatGroup chatGroup,ChatMessage chatMessage);
 
-
         [OperationContract]
-        bool handleLeaveGroup(ChatGroup chatGroup, User user);
+        void handleLeaveGroup(ChatGroup chatGroup, User user);
 
         [OperationContract]
         List<ChatMessage> LoadChatHistory(ChatGroup chatGroup);
