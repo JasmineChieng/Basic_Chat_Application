@@ -36,6 +36,7 @@ namespace ChatApp
         private User receivingUser;
         private ObservableCollection<PrivateMessage> privateMessagesCollection = new ObservableCollection<PrivateMessage>();
         private HashSet<string> createdButtons = new HashSet<string>(); // Create a HashSet to track created buttons
+        private bool isPrivate=false;
 
 
         public Page1(Window1 chatWindow, User user, ChatGroup chatgroup, BusinessInterface foob)
@@ -61,6 +62,8 @@ namespace ChatApp
 
             // Call the method to populate the sidePanel with member buttons
             PopulateSidePanelWithMemberButtons();
+
+            isPrivate = false;
         }
 
         //Overloaded constructor to create second type of page 1, for private messaging
@@ -91,12 +94,10 @@ namespace ChatApp
                 }
             }
 
-
             chatListBox.ItemsSource = privateMessagesCollection; //set item source to the view only collection
             this.user = messagingUser;
             this.receivingUser = receivingUser;
             this.foob = foob;
-
 
             // Add the filtered messages to the ObservableCollection
             bool isHistoryEmpty = !privateChatHistory.Any();
@@ -118,8 +119,12 @@ namespace ChatApp
 
             sendBtn.Click -= sendBtn_Click;
             sendBtn.Click += sendPMBtn_Click;
+
+            isPrivate = true;
         }
 
+
+        //For creating private chat button in window1
         public Page1(Window1 chatWindow, User user, BusinessInterface foob)
         {
             InitializeComponent();
@@ -128,11 +133,6 @@ namespace ChatApp
             this.foob = foob;
             this.chatWindow = chatWindow;
 
-            // Load the chat group's members first
-         //   LoadChatGroupMembers();
-
-            // Call the method to populate the sidePanel with member buttons
-           // PopulateSidePanelWithMemberButtons();
         }
         private void LoadChatGroupMembers()
         {
@@ -142,9 +142,12 @@ namespace ChatApp
             chatgroup.Members.Clear();
             chatgroup.Members.AddRange(members);
         }
+
+
+        
         private void sendBtn_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
             // Create a new chat message when the Send button is clicked
             string userMessage = messageTB.Text;
 
@@ -162,16 +165,14 @@ namespace ChatApp
                 messageTB.Clear(); // Clear the message input field
 
                 foob.handleMessage(chatgroup, newMessage);
-            }*/
-
-            SendMessage(false);
+            }
         }
 
       
         //same as normal send, but for PM
         private void sendPMBtn_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
             // Create a new chat message when the Send button is clicked
             string userMessage = messageTB.Text;
 
@@ -189,49 +190,9 @@ namespace ChatApp
                 messageTB.Clear(); // Clear the message input field
 
                 foob.handlePrivateMessage(user, receivingUser, newMessage);
-            }*/
-
-            SendMessage(true);
-
-        }
-        
-        private void SendMessage(bool isPrivate)
-        {
-            // Create a new chat message when the Send button is clicked
-            string userMessage = messageTB.Text;
-
-            if (!string.IsNullOrWhiteSpace(userMessage))
-            {
-                if (isPrivate)
-                {
-                    PrivateMessage newMessage = new PrivateMessage
-                    {
-                        Sender = user.Username,
-                        Receiver = receivingUser.Username,
-                        Message = userMessage,
-                        Timestamp = DateTime.Now
-                    };
-
-                    privateMessagesCollection.Add(newMessage);
-                    foob.handlePrivateMessage(user, receivingUser, newMessage);
-                }
-                else
-                {
-                    // Create a new group chat message
-                    ChatMessage newMessage = new ChatMessage
-                    {
-                        Sender = user.Username,
-                        Message = userMessage,
-                        Timestamp = DateTime.Now
-                    };
-
-
-                    chatMessages.Add(newMessage);
-                    foob.handleMessage(chatgroup, newMessage);
-                }
-
-                messageTB.Clear(); // Clear the message input field
             }
+
+
         }
 
         private void viewMoreBtn_Click(object sender, RoutedEventArgs e)
@@ -365,7 +326,7 @@ namespace ChatApp
             }
 
         }
-
+     
         private void sendFileBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -377,71 +338,139 @@ namespace ChatApp
                 string selectedFilePath = openFileDialog.FileName;
                 string selectedFileExtension = System.IO.Path.GetExtension(selectedFilePath).ToLower();
 
-                if (selectedFileExtension == ".txt")
+                if (isPrivate)
                 {
-                    // Handle text file upload
-                    byte[] fileData = File.ReadAllBytes(selectedFilePath);
-
-                    // Create a chat message with the text file as an attachment
-                    ChatMessage newMessage = new ChatMessage
-                    {
-                        Sender = user.Username, // Replace with the sender's username
-                        Timestamp = DateTime.Now,
-                        Message = $"[File: {System.IO.Path.GetFileName(selectedFilePath)}]"
-                    };
-
-                    // Attach the text file as a file attachment
-                    newMessage.Attachments.Add(new FileAttachment
-                    {
-                        FileName = System.IO.Path.GetFileName(selectedFilePath),
-                        FileData = fileData
-                    });
-
-                    chatMessages.Add(newMessage);
-
-                    foob.handleMessage(chatgroup, newMessage);
+                    // Handle private message attachment
+                    HandlePrivateMessageAttachment(selectedFilePath, selectedFileExtension, receivingUser);
                 }
-                else if (selectedFileExtension == ".jpg" ||
-                         selectedFileExtension == ".jpeg" ||
-                         selectedFileExtension == ".png" ||
-                         selectedFileExtension == ".gif" ||
-                         selectedFileExtension == ".bmp")
+                else
                 {
-                    // Handle image file upload
-                    byte[] imageData = File.ReadAllBytes(selectedFilePath);
-
-                    // Create a chat message with the image attachment
-                    ChatMessage newMessage = new ChatMessage
-                    {
-                        Sender = user.Username, // Replace with the sender's username
-                        Timestamp = DateTime.Now,
-                        Message = $"[Image: {System.IO.Path.GetFileName(selectedFilePath)}]", // Display as a link
-                    };
-
-                    // Attach the image as a file attachment
-                    newMessage.Attachments.Add(new FileAttachment
-                    {
-                        FileName = System.IO.Path.GetFileName(selectedFilePath),
-                        FileData = imageData,
-                        ImageFormat = selectedFileExtension.Substring(1) // Store the image format as a string
-                    });
-
-                    chatMessages.Add(newMessage);
-
-                    foob.handleMessage(chatgroup, newMessage);
+                    // Handle chat message attachment
+                    HandleChatMessageAttachment(selectedFilePath, selectedFileExtension);
                 }
             }
         }
 
+        private void HandlePrivateMessageAttachment(string selectedFilePath, string selectedFileExtension, User receiver)
+        {
+            // Create a private message
+            PrivateMessage privateMessage = new PrivateMessage
+            {
+                Sender = user.Username,
+                Receiver = receiver.Username,
+                Timestamp = DateTime.Now
+            };
+
+            if (selectedFileExtension == ".txt")
+            {
+                // Handle text file upload
+                byte[] fileData = File.ReadAllBytes(selectedFilePath);
+                privateMessage.Message = $"[File: {System.IO.Path.GetFileName(selectedFilePath)}]";
+
+                // Attach the text file as a file attachment
+                privateMessage.Attachments.Add(new FileAttachment
+                {
+                    FileName = System.IO.Path.GetFileName(selectedFilePath),
+                    FileData = fileData
+                });
+            }
+            else if (selectedFileExtension == ".jpg" ||
+                     selectedFileExtension == ".jpeg" ||
+                     selectedFileExtension == ".png" ||
+                     selectedFileExtension == ".gif" ||
+                     selectedFileExtension == ".bmp")
+            {
+                // Handle image file upload
+                byte[] imageData = File.ReadAllBytes(selectedFilePath);
+                privateMessage.Message = $"[Image: {System.IO.Path.GetFileName(selectedFilePath)}]";
+
+                // Attach the image as a file attachment
+                privateMessage.Attachments.Add(new FileAttachment
+                {
+                    FileName = System.IO.Path.GetFileName(selectedFilePath),
+                    FileData = imageData,
+                    ImageFormat = selectedFileExtension.Substring(1) // Store the image format as a string
+                });
+            }
+
+            // Add the private message to the collection and handle it
+            user.PrivateMessages.Add(privateMessage);
+            receiver.PrivateMessages.Add(privateMessage);
+            privateMessagesCollection.Add(privateMessage);
+            foob.handlePrivateMessage(user,receiver,privateMessage);
+        }
+
+        private void HandleChatMessageAttachment(string selectedFilePath, string selectedFileExtension)
+        {
+            // Create a chat message
+            ChatMessage chatMessage = new ChatMessage
+            {
+                Sender = user.Username,
+                Timestamp = DateTime.Now
+            };
+
+            if (selectedFileExtension == ".txt")
+            {
+                // Handle text file upload
+                byte[] fileData = File.ReadAllBytes(selectedFilePath);
+                chatMessage.Message = $"[File: {System.IO.Path.GetFileName(selectedFilePath)}]";
+
+                // Attach the text file as a file attachment
+                chatMessage.Attachments.Add(new FileAttachment
+                {
+                    FileName = System.IO.Path.GetFileName(selectedFilePath),
+                    FileData = fileData
+                });
+            }
+            else if (selectedFileExtension == ".jpg" ||
+                     selectedFileExtension == ".jpeg" ||
+                     selectedFileExtension == ".png" ||
+                     selectedFileExtension == ".gif" ||
+                     selectedFileExtension == ".bmp")
+            {
+                // Handle image file upload
+                byte[] imageData = File.ReadAllBytes(selectedFilePath);
+                chatMessage.Message = $"[Image: {System.IO.Path.GetFileName(selectedFilePath)}]";
+
+                // Attach the image as a file attachment
+                chatMessage.Attachments.Add(new FileAttachment
+                {
+                    FileName = System.IO.Path.GetFileName(selectedFilePath),
+                    FileData = imageData,
+                    ImageFormat = selectedFileExtension.Substring(1) // Store the image format as a string
+                });
+            }
+
+            // Add the chat message to the collection and handle it
+            chatMessages.Add(chatMessage);
+            foob.handleMessage(chatgroup, chatMessage);
+        }
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
-            ChatMessage clickedMessage = (ChatMessage)textBlock.DataContext;
+           
 
-            if (HasFileAttachment(clickedMessage))
+            if (isPrivate)
             {
-                // Trigger file download here
-                DownloadFileAttachment(clickedMessage);
+                PrivateMessage privateMessage = (PrivateMessage)textBlock.DataContext;
+
+                if (PHasFileAttachment(privateMessage))
+                {
+                    // Trigger file download here
+                    PDownloadFileAttachment(privateMessage);
+                }
+            }
+            else
+            {
+                ChatMessage clickedMessage = (ChatMessage)textBlock.DataContext;
+
+
+                if (HasFileAttachment(clickedMessage))
+                {
+                    // Trigger file download here
+                    DownloadFileAttachment(clickedMessage);
+                }
+
             }
         }
 
@@ -450,28 +479,6 @@ namespace ChatApp
             // Check if the message has any attachments
             return message.Attachments != null && message.Attachments.Count > 0;
         }
-
-        /*
-        private void DownloadFileAttachment(ChatMessage message)
-        {
-            // Handle the file attachment download here
-            foreach (FileAttachment attachment in message.Attachments)
-            {
-                // Check the type of attachment and take appropriate action
-                if (attachment is FileAttachment txtAttachment)
-                {
-                    // Handle text file attachment download
-                    // For example, you can display it in a dialog or save it to disk
-                    MessageBox.Show($"Downloading text file: {txtAttachment.FileName}");
-                }
-                else if (attachment is FileAttachment imgAttachment)
-                {
-                    // Handle image file attachment download
-                    // For example, you can display it in an image viewer or save it to disk
-                    MessageBox.Show($"Downloading image: {imgAttachment.FileName}");
-                }
-            }
-        }*/
 
         private void DownloadFileAttachment(ChatMessage message)
         {
@@ -501,6 +508,40 @@ namespace ChatApp
             }
         }
 
+
+        private bool PHasFileAttachment(PrivateMessage message)
+        {
+            // Check if the message has any attachments
+            return message.Attachments != null && message.Attachments.Count > 0;
+        }
+
+        private void PDownloadFileAttachment(PrivateMessage message)
+        {
+            // Prompt the user to select a download location
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = message.Attachments[0].FileName; // Set the default file name
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string downloadPath = saveFileDialog.FileName;
+
+                // Check the type of attachment and save it to the specified location
+                foreach (FileAttachment attachment in message.Attachments)
+                {
+                    if (attachment is FileAttachment txtAttachment)
+                    {
+                        // Handle text file attachment download
+                        File.WriteAllBytes(downloadPath, txtAttachment.FileData);
+                    }
+                    else if (attachment is FileAttachment imgAttachment)
+                    {
+                        // Handle image file attachment download
+                        File.WriteAllBytes(downloadPath, imgAttachment.FileData);
+                    }
+                }
+
+                MessageBox.Show($"File downloaded to: {downloadPath}");
+            }
+        }
         public Button PrivateButton_UI(User user)
         {
             // Create a StackPanel to hold the text and image
@@ -562,6 +603,7 @@ namespace ChatApp
             string username = clickedButton.Content.ToString();
 
         }
+
     }
 
 
