@@ -245,10 +245,7 @@ namespace ChatApp
 
             if (!memberUsername.Equals(user.Username) && !createdButtons.Contains(memberUsername))
             {
-                foreach (var message in privateMessages)
-                {
-                    if(!message.Sender.Equals(memberUsername) &&  !message.Receiver.Equals(memberUsername))
-                    {
+             
                         User receivingUser = foob.GetUser(memberUsername);
                         if (receivingUser != null)
                         {
@@ -275,8 +272,8 @@ namespace ChatApp
                             }
                         }
 
-                    }
-                }
+                    
+                
                     
             }
         }
