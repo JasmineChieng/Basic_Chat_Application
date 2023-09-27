@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ChatApplication",
+    "\\ChatApplication\\BusinessTierServer",
+    "\\ChatApplication\\ChatApp",
+    "\\ChatApplication\\DatabaseServer"
   ],
-  "SelectedNode": "\\C:\\Users\\User\\Source\\Repos\\JasmineChieng\\Basic_Chat_Application",
+  "SelectedNode": "\\ChatApplication\\DatabaseServer\\ServerInterfaceImpl.cs",
   "PreviewInSolutionExplorer": false
 }

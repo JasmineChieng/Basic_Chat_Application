@@ -31,6 +31,9 @@ namespace DatabaseServer
 
         [OperationContract]
         void handleMessage(ChatGroup chatGroup, ChatMessage chatMessage);
+        [OperationContract]
+        void handlePrivateMessage(User messagingUser, User receivingUser, PrivateMessage newMessage);
+
 
         [OperationContract]
         bool handleLeaveGroup(ChatGroup chatGroup, User user);
@@ -43,6 +46,9 @@ namespace DatabaseServer
 
         [OperationContract]
         bool JoinGroupChat(ChatGroup chatGroup, User user);
+
+        [OperationContract]
+        User GetUser(String memberUsername);
 
 
         [OperationContract]

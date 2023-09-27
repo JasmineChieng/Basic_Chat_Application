@@ -29,3 +29,19 @@ C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication
 C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\Newtonsoft.Json.xml
 C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\Newtonsoft.Json.dll
 C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\Newtonsoft.Json.xml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\BusinessTierServer.exe.config
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\BusinessTierServer.exe
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\BusinessTierServer.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\DatabaseServer.exe
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\Newtonsoft.Json.dll
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\UserDLL.dll
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\DatabaseServer.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\DatabaseServer.exe.config
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\UserDLL.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\bin\Debug\Newtonsoft.Json.xml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\obj\Debug\BusinessTierServer.csproj.AssemblyReference.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\obj\Debug\BusinessTierServer.csproj.SuggestedBindingRedirects.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\obj\Debug\BusinessTierServer.csproj.CoreCompileInputs.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\obj\Debug\BusinessTierServer.csproj.CopyComplete
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\obj\Debug\BusinessTierServer.exe
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\BusinessTierServer\obj\Debug\BusinessTierServer.pdb

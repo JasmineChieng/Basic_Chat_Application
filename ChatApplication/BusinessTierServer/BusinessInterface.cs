@@ -32,6 +32,9 @@ namespace BusinessTierServer
         void handleMessage(ChatGroup chatGroup, ChatMessage chatMessage);
 
         [OperationContract]
+        void handlePrivateMessage(User messagingUser, User receivingUser, PrivateMessage newMessage);
+
+        [OperationContract]
         bool handleLeaveGroup(ChatGroup chatGroup, User user);
 
         [OperationContract]
@@ -43,6 +46,8 @@ namespace BusinessTierServer
         [OperationContract]
         bool JoinGroupChat(ChatGroup chatGroup, User user);
 
+        [OperationContract]
+        User GetUser(String memberUsername);
 
         [OperationContract]
         void SaveUserData();
