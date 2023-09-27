@@ -62,5 +62,6 @@ namespace DatabaseServer
         [OperationContract]
         byte[] DecompressData(byte[] compressedData);
 
+
     }
 }

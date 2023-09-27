@@ -22,7 +22,7 @@ namespace DatabaseServer
             chatGroups = LoadChatGroups();
         }
 
-        private ServerInterface foob;
+      //  private ServerInterface foob;
 
         public bool RegisterUser(User user)
         {
@@ -145,61 +145,55 @@ namespace DatabaseServer
             return new User();
         }
 
-        /*
-        public bool JoinGroupChat(ChatGroup chatGroup, User user)
-        {
-            // Check if the user has already joined the specific group
-            bool isUserAlreadyMember = user.JoinedGroups.Any(group => group.Name == chatGroup.Name);
-
-            if (!isUserAlreadyMember)
-            {
-                // Find the chat group with the given name
-                var targetChatGroup = chatGroups.FirstOrDefault(c => c.Name == chatGroup.Name);
-
-                if (targetChatGroup != null)
-                {
-                    targetChatGroup.Members.Add(user);
-
-                    // Update the JoinedGroups list for the user
-                    user.JoinedGroups.Add(targetChatGroup);
-
-                    // Save the modified chat groups list to the file
-                    SaveChatGroups();
-
-                    // Save the modified user list to the file
-                    SaveUserData();
-
-                    return true;
-                }
-            }
-
-            return false; // Chat group not found or user already a member
-        }
-        */
-
-
-
-
-
-
-        // Method to save chat groups to a JSON file
+        // Save chat groups to a JSON file with compressed data
         public void SaveChatGroups()
         {
             try
             {
                 string filePath = "chatGroups.json";
 
-                // Serialize the list of chat groups to JSON format
-                string jsonData = JsonConvert.SerializeObject(chatGroups, Newtonsoft.Json.Formatting.Indented);
+                // Create a list of chat groups with compressed data
+                List<ChatGroup> chatGroupsToSave = new List<ChatGroup>();
 
-                // Write the JSON data to the file
+                foreach (ChatGroup chatGroup in chatGroups)
+                {
+                    // Create a new chat group with compressed chat history
+                    ChatGroup chatGroupToSave = new ChatGroup
+                    {
+                        Name = chatGroup.Name,
+                        Members = chatGroup.Members,
+                        ChatHistory = new List<ChatMessage>()
+                    };
+
+                    foreach (ChatMessage message in chatGroup.ChatHistory)
+                    {
+                        // Compress each attachment in the message
+                        ChatMessage compressedMessage = new ChatMessage
+                        {
+                            Sender = message.Sender,
+                            Timestamp = message.Timestamp,
+                            Message = message.Message,
+                            Attachments = message.Attachments.Select(attachment =>
+                            {
+                                // Compress the attachment data
+                                byte[] compressedData = CompressData(attachment.FileData);
+                                attachment.FileData = compressedData;
+                                return attachment;
+                            }).ToList()
+                        };
+
+                        chatGroupToSave.ChatHistory.Add(compressedMessage);
+                    }
+
+                    chatGroupsToSave.Add(chatGroupToSave);
+                }
+                string jsonData = JsonConvert.SerializeObject(chatGroupsToSave, Formatting.Indented);
                 File.WriteAllText(filePath, jsonData);
             }
             catch (Exception ex)
             {
                 // Handle any exceptions that may occur during file saving
                 // You can log the error or take appropriate action
-                Console.WriteLine("Error saving chat data: " + ex.Message);
             }
         }
 
@@ -275,7 +269,6 @@ namespace DatabaseServer
 
             return new List<User>(); // Return an empty list if the file doesn't exist or there's an error
         }
-
         public void handleMessage(ChatGroup chatGroup, ChatMessage newMessage)
         {
             foreach (ChatGroup c in chatGroups)
@@ -297,28 +290,6 @@ namespace DatabaseServer
             }
 
             SaveChatGroups();
-        }
-
-        public void handlePrivateMessage(User messagingUser, User receivingUser, PrivateMessage newMessage)
-        {
-
-            foreach (User user in users)
-            {
-                if (user.Username.Equals(messagingUser.Username))
-                {
-                    user.PrivateMessages.Add(newMessage);
-                    //user.JoinedPrivateChats.Add(receivingUser.Username);
-                }
-                //adds the receiving user information to the messaging user
-
-                if (user.Username.Equals(receivingUser.Username))
-                {
-                    user.PrivateMessages.Add(newMessage);
-                    //user.JoinedPrivateChats.Add(messagingUser.Username);
-                }
-                //adds the messaging user's name to the receivings users list
-            }
-            SaveUserData();
         }
 
 
@@ -351,6 +322,28 @@ namespace DatabaseServer
                 return output.ToArray();
             }
         }
+        public void handlePrivateMessage(User messagingUser, User receivingUser, PrivateMessage newMessage)
+        {
+
+            foreach (User user in users)
+            {
+                if (user.Username.Equals(messagingUser.Username))
+                {
+                    user.PrivateMessages.Add(newMessage);
+                    //user.JoinedPrivateChats.Add(receivingUser.Username);
+                }
+                //adds the receiving user information to the messaging user
+
+                if (user.Username.Equals(receivingUser.Username))
+                {
+                    user.PrivateMessages.Add(newMessage);
+                    //user.JoinedPrivateChats.Add(messagingUser.Username);
+                }
+                //adds the messaging user's name to the receivings users list
+            }
+            SaveUserData();
+        }
+
 
         public List<ChatMessage> LoadChatHistory(ChatGroup chatGroup)
         {
@@ -453,5 +446,6 @@ namespace DatabaseServer
             }
             return new List<User>();
         }
+
     }
 }

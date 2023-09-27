@@ -30,6 +30,7 @@ namespace BusinessTierServer
 
             ChannelFactory<ServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
+            tcp.MaxReceivedMessageSize = 2147483647; // Set your desired size here
             //Set the URL and create the connection!
             string URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<ServerInterface>(tcp, URL);
@@ -127,14 +128,15 @@ namespace BusinessTierServer
     
         }
 
-        byte[] BusinessInterface.CompressData(byte[] data)
+        public byte[] CompressData(byte[] data)
         {
            return foob.CompressData(data);
         }
 
-        byte[] BusinessInterface.DecompressData(byte[] compressedData)
+        public byte[] DecompressData(byte[] compressedData)
         {
            return foob.DecompressData(compressedData);  
         }
+
     }
 }

@@ -25,6 +25,7 @@ namespace ChatApp
     public partial class Window1 : Window
     {
         private Page3 page3;
+        private Page1 page1;
         private User user;
         private BusinessInterface foob;
         public string ButtonContentForChatHistory { get; set; }
@@ -38,6 +39,7 @@ namespace ChatApp
             ChatBox.NavigationService.Navigate(defaultPage);
 
             page3 = new Page3(this, user, foob);
+            page1 = new Page1(this, user, foob);
             refreshChatContainer(user);
 
         }
@@ -47,6 +49,11 @@ namespace ChatApp
 
             ChatContainer.Children.Clear();
             List<ChatGroup> groupList = user.JoinedGroups;
+            List<PrivateMessage> privateMessages = user.PrivateMessages;
+
+            // Create a HashSet to keep track of users loaded in the chat container
+            HashSet<string> loadedUsers = new HashSet<string>();
+
             if (groupList != null)
             {
                 foreach (var content in groupList)
@@ -60,6 +67,27 @@ namespace ChatApp
                     ChatContainer.Children.Add(groupButton);
                 }
             }
+
+            if (privateMessages != null)
+            {
+                foreach (var message in privateMessages)
+                {
+                    string otherUser = (message.Sender == user.Username) ? message.Receiver : message.Sender;
+                   
+                    // Check if the other user has already been loaded
+                    if (!loadedUsers.Contains(otherUser))
+                    { 
+                        User receiver = foob.GetUser(otherUser);
+                        Button chatButton = page1.PrivateButton_UI(receiver);
+                        chatButton.Click += Page1_PrivateButton_Click; // Handle button click event
+                        ChatContainer.Children.Add(chatButton);
+                        loadedUsers.Add(otherUser);
+                    }
+                }
+            }
+
+          
+
         }
         private void createGroupBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -82,6 +110,19 @@ namespace ChatApp
                 ChatBox.NavigationService.Navigate(chatHistoryPage);
             }
         }
+        private void Page1_PrivateButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+
+            // Retrieve the User object from the Tag property
+            if (clickedButton.Tag is User selectedUser)
+            {
+                // You now have the selected User object
+                // Implement your logic here, such as opening a private chat with this user
+                Page1 chatHistoryPage = new Page1(user, selectedUser, foob);
+                ChatBox.NavigationService.Navigate(chatHistoryPage);
+            }
+        }
 
 
         private void logoutBtn_Click(object sender, RoutedEventArgs e)
@@ -90,6 +131,8 @@ namespace ChatApp
             this.Visibility = Visibility.Hidden;
             login.Show();
         }
+
+
     }
 
 

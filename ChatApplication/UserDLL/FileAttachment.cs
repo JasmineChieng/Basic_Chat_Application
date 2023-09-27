@@ -15,7 +15,5 @@ namespace UserDLL
 
         public bool isCompressed { get; set; }
 
-        public bool isImage { get; set; }
-
     }
 }

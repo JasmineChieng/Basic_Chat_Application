@@ -40,6 +40,7 @@ namespace ChatApp
             InitializeComponent();
             ChannelFactory<BusinessInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
+            tcp.MaxReceivedMessageSize = 2147483647; // Set your desired size here
             //Set the URL and create the connection!
             string URL = "net.tcp://localhost:8200/DataBusinessService";
             foobFactory = new ChannelFactory<BusinessInterface>(tcp, URL);
