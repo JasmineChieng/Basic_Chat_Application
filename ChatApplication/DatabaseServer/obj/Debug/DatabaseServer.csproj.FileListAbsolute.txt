@@ -23,3 +23,16 @@ C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\
 C:\Users\User\Source\Repos\JasmineChieng\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\Newtonsoft.Json.xml
 C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\Newtonsoft.Json.dll
 C:\Users\shuma\source\repos\JasmineChieng\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\Newtonsoft.Json.xml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\DatabaseServer.exe.config
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\DatabaseServer.exe
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\DatabaseServer.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\Newtonsoft.Json.dll
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\UserDLL.dll
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\UserDLL.pdb
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\bin\Debug\Newtonsoft.Json.xml
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\obj\Debug\DatabaseServer.csproj.AssemblyReference.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\obj\Debug\DatabaseServer.csproj.SuggestedBindingRedirects.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\obj\Debug\DatabaseServer.csproj.CoreCompileInputs.cache
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\obj\Debug\DatabaseServer.csproj.CopyComplete
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\obj\Debug\DatabaseServer.exe
+D:\PROGRAMMING\DC ASSIGNMENT 1\Basic_Chat_Application\ChatApplication\DatabaseServer\obj\Debug\DatabaseServer.pdb

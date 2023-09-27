@@ -64,7 +64,13 @@ namespace BusinessTierServer
     
         }
 
-     
+        public User GetUser(String memberUsername)
+        {
+            return foob.GetUser(memberUsername);
+        }
+
+
+
         public void SaveChatGroups()
         {
              foob.SaveChatGroups();
@@ -96,6 +102,11 @@ namespace BusinessTierServer
         {
     
             foob.handleMessage(chatGroup, newMessage);
+        }
+
+        public void handlePrivateMessage(User messagingUser, User receivingUser, PrivateMessage newMessage)
+        {
+            foob.handlePrivateMessage(messagingUser, receivingUser, newMessage);
         }
 
         public List<ChatMessage> LoadChatHistory(ChatGroup chatGroup)

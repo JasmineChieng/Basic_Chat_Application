@@ -16,9 +16,115 @@
           }
         ],
         "ChatHistory": []
+      },
+      {
+        "Name": "testing123",
+        "IsPrivate": true,
+        "JoinCode": "1234",
+        "Members": [
+          {
+            "Username": "shu",
+            "Password": "123",
+            "JoinedGroups": [
+              {
+                "Name": "new group #1",
+                "IsPrivate": false,
+                "JoinCode": null,
+                "Members": [
+                  {
+                    "Username": "jas",
+                    "Password": "jas123",
+                    "JoinedGroups": [],
+                    "PrivateMessages": []
+                  },
+                  {
+                    "Username": "shu",
+                    "Password": "123",
+                    "JoinedGroups": [],
+                    "PrivateMessages": []
+                  }
+                ],
+                "ChatHistory": []
+              }
+            ],
+            "PrivateMessages": []
+          },
+          {
+            "Username": "jas",
+            "Password": "jas123",
+            "JoinedGroups": [
+              {
+                "Name": "new group #1",
+                "IsPrivate": false,
+                "JoinCode": null,
+                "Members": [
+                  {
+                    "Username": "jas",
+                    "Password": "jas123",
+                    "JoinedGroups": [],
+                    "PrivateMessages": []
+                  },
+                  {
+                    "Username": "shu",
+                    "Password": "123",
+                    "JoinedGroups": [],
+                    "PrivateMessages": []
+                  }
+                ],
+                "ChatHistory": []
+              }
+            ],
+            "PrivateMessages": [
+              {
+                "Sender": "shu",
+                "Receiver": "jas",
+                "Message": "hi jasmine",
+                "Timestamp": "2023-09-27T13:07:33.0587918+08:00"
+              },
+              {
+                "Sender": "shu",
+                "Receiver": "jas",
+                "Message": "woah",
+                "Timestamp": "2023-09-27T13:07:37.0668632+08:00"
+              },
+              {
+                "Sender": "shu",
+                "Receiver": "jas",
+                "Message": "hi jasmine 2",
+                "Timestamp": "2023-09-27T13:38:28.4906888+08:00"
+              }
+            ]
+          }
+        ],
+        "ChatHistory": []
       }
     ],
-    "PrivateMessages": []
+    "PrivateMessages": [
+      {
+        "Sender": "shu",
+        "Receiver": "jas",
+        "Message": "hi jasmine",
+        "Timestamp": "2023-09-27T13:07:33.0587918+08:00"
+      },
+      {
+        "Sender": "shu",
+        "Receiver": "jas",
+        "Message": "woah",
+        "Timestamp": "2023-09-27T13:07:37.0668632+08:00"
+      },
+      {
+        "Sender": "shu",
+        "Receiver": "jas",
+        "Message": "hi jasmine 2",
+        "Timestamp": "2023-09-27T13:38:28.4906888+08:00"
+      },
+      {
+        "Sender": "jas",
+        "Receiver": "shu",
+        "Message": "hi shu!!!",
+        "Timestamp": "2023-09-27T13:39:15.7653285+08:00"
+      }
+    ]
   },
   {
     "Username": "shu",
@@ -80,6 +186,31 @@
         "ChatHistory": []
       }
     ],
-    "PrivateMessages": []
+    "PrivateMessages": [
+      {
+        "Sender": "shu",
+        "Receiver": "jas",
+        "Message": "hi jasmine",
+        "Timestamp": "2023-09-27T13:07:33.0587918+08:00"
+      },
+      {
+        "Sender": "shu",
+        "Receiver": "jas",
+        "Message": "woah",
+        "Timestamp": "2023-09-27T13:07:37.0668632+08:00"
+      },
+      {
+        "Sender": "shu",
+        "Receiver": "jas",
+        "Message": "hi jasmine 2",
+        "Timestamp": "2023-09-27T13:38:28.4906888+08:00"
+      },
+      {
+        "Sender": "jas",
+        "Receiver": "shu",
+        "Message": "hi shu!!!",
+        "Timestamp": "2023-09-27T13:39:15.7653285+08:00"
+      }
+    ]
   }
 ]

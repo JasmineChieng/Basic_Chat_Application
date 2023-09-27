@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using UserDLL;
@@ -129,6 +130,19 @@ namespace DatabaseServer
 
 
             return false; // Chat group not found
+        }
+
+       
+        public User GetUser(String memberUsername)
+        {
+            foreach (User u in users)
+            {
+                if (u.Username.Equals(memberUsername))
+                {
+                    return u;
+                }
+            }
+            return new User();
         }
 
         /*
@@ -283,6 +297,28 @@ namespace DatabaseServer
             }
 
             SaveChatGroups();
+        }
+
+        public void handlePrivateMessage(User messagingUser, User receivingUser, PrivateMessage newMessage)
+        {
+
+            foreach (User user in users)
+            {
+                if (user.Username.Equals(messagingUser.Username))
+                {
+                    user.PrivateMessages.Add(newMessage);
+                    //user.JoinedPrivateChats.Add(receivingUser.Username);
+                }
+                //adds the receiving user information to the messaging user
+
+                if (user.Username.Equals(receivingUser.Username))
+                {
+                    user.PrivateMessages.Add(newMessage);
+                    //user.JoinedPrivateChats.Add(messagingUser.Username);
+                }
+                //adds the messaging user's name to the receivings users list
+            }
+            SaveUserData();
         }
 
 
