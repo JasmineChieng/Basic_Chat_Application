@@ -363,6 +363,22 @@ namespace DatabaseServer
             }
         }
 
+        public List<PrivateMessage> LoadPMHistory(User messagingUser)
+        {
+            // Check if the chat group exists in your chatGroups list
+            var existingUser = users.FirstOrDefault(c => c.Username == messagingUser.Username);
+
+            if(existingUser != null) 
+            {
+                return existingUser.PrivateMessages;
+            }        
+            else
+            {
+                return new List<PrivateMessage>();
+            }
+
+        }
+
         public bool handleLeaveGroup(ChatGroup chatgroup, User user)
         {
             if (chatgroup != null && user != null)

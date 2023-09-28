@@ -71,8 +71,10 @@ namespace ChatApp
         {
             InitializeComponent();
 
-            List<PrivateMessage> tempPMList = messagingUser.PrivateMessages;
+            List<PrivateMessage> tempPMList = foob.LoadPMHistory(messagingUser);
+            //List<PrivateMessage> tempPMList = messagingUser.PrivateMessages;
             //List of private messages that the current user has sent before
+
             List<PrivateMessage> privateChatHistory = new List<PrivateMessage>();
             //List of private messages that is between the messaging and receiving user
 

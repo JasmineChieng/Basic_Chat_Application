@@ -116,6 +116,11 @@ namespace BusinessTierServer
    
         }
 
+        public List<PrivateMessage> LoadPMHistory(User messagingUser)
+        {
+            return foob.LoadPMHistory(messagingUser);
+        }
+
         public bool handleLeaveGroup(ChatGroup chatgroup, User user)
         {
            return foob.handleLeaveGroup(chatgroup, user); 

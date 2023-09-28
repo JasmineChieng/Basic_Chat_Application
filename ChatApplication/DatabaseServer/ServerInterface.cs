@@ -42,6 +42,9 @@ namespace DatabaseServer
         List<ChatMessage> LoadChatHistory(ChatGroup chatGroup);
 
         [OperationContract]
+        List<PrivateMessage> LoadPMHistory(User messagingUser);
+
+        [OperationContract]
         List<User> LoadChatGroupMembers(ChatGroup chatgroup);
 
         [OperationContract]
