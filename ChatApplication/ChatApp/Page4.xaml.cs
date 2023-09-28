@@ -39,13 +39,14 @@ namespace ChatApp
             // Clear the existing content of the container
             Page4Container.Children.Clear();
 
-            // Iterate through the group list and create a card for each group
+            // Iterate through the group list and create a card for each group that was available
             foreach (var group in groupsList)
             {
                 CreateGroupCard(group);
             }
         }
 
+        //Dynamic group card UI 
         private void CreateGroupCard(ChatGroup group)
         {
             // Create a card to display the group
@@ -84,6 +85,7 @@ namespace ChatApp
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(350) }); // Auto-sized column for the private label
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(60) }); // Auto-sized column for the join button
 
+            //If is private group add a private icon
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string imageRelativePath = "privateIcon.png";
             string imagePath = System.IO.Path.Combine(baseDirectory, imageRelativePath);
@@ -97,7 +99,6 @@ namespace ChatApp
                 Height = 20,
                 Margin = new Thickness(2),
 
-                // Adjust properties and styles as needed
             };
 
             // Place the elements in the Grid
@@ -105,8 +106,7 @@ namespace ChatApp
             Grid.SetColumn(privateLabel, 0);       // Set the private label to the second column
             Grid.SetColumn(joinButton, 2);         // Set the join button to the third column
 
-
-            // Add elements to the Grid
+            //If is private , need show the enter code dialog
             grid.Children.Add(groupNameTextBlock);
             grid.Children.Add(privateLabel);
             grid.Children.Add(joinButton);
@@ -122,6 +122,7 @@ namespace ChatApp
 
             else
             {
+                //If not private, then hide the private logo
                 privateLabel.Visibility = Visibility.Collapsed;
                 // Handle the join button click event
                 joinButton.Click += (s, args) =>
@@ -130,7 +131,6 @@ namespace ChatApp
                     if (foob.JoinGroupChat(group, user))
                     {
                         MessageBox.Show($"Joined group: {group.Name}");
-                        //   chatWindow.refreshChatContainer(user);
 
                         Button groupButton = page3.GroupButton_UI(group);
                         if (chatWindow != null)
@@ -169,6 +169,7 @@ namespace ChatApp
 
         }
 
+        //Calling the enter join code window
         private void OpenJoinCodeDialog(ChatGroup group)
         {
             Window2 dialog = new Window2();
@@ -186,7 +187,6 @@ namespace ChatApp
                     if (foob.JoinGroupChat(group, user))
                     {
                         MessageBox.Show($"Joined group: {group.Name}");
-                        //  chatWindow.refreshChatContainer(user);
                         Button groupButton = page3.GroupButton_UI(group);
                         if (chatWindow != null)
                         {

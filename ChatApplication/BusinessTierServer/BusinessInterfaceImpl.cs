@@ -14,14 +14,6 @@ namespace BusinessTierServer
 {
     internal class BusinessInterfaceImpl : BusinessInterface
     {
-        private List<User> users = new List<User>();
-        private List<ChatGroup> chatGroups = new List<ChatGroup>();
-
-/*         public BusinessInterfaceImpl()
-        {
-            users = LoadUserData();
-            chatGroups = LoadChatGroups();
-        }*/
 
         private ServerInterface foob;
 
@@ -30,7 +22,7 @@ namespace BusinessTierServer
 
             ChannelFactory<ServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
-            tcp.MaxReceivedMessageSize = 2147483647; // Set your desired size here
+            tcp.MaxReceivedMessageSize = 2147483647; //Set receive message size to the max 
             //Set the URL and create the connection!
             string URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<ServerInterface>(tcp, URL);
@@ -92,7 +84,6 @@ namespace BusinessTierServer
 
         }
 
-        // Load user data from the JSON file
         public List<User> LoadUserData()
         {
             return foob.LoadUserData();

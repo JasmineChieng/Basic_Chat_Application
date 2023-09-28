@@ -43,18 +43,21 @@ namespace ChatApp
             this.user = user;
         }
 
+        //If private checkbox is checked, then ask user to enter a join code
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             joinCodeLabel.Visibility = Visibility.Visible;
             joinCodeTB.Visibility = Visibility.Visible;
         }
 
+        //If is not private, hide the join code
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             joinCodeLabel.Visibility = Visibility.Hidden;
             joinCodeTB.Visibility = Visibility.Hidden;
         }
 
+        //Handling create button clicked event
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string newGroupName = groupNameTB.Text;
@@ -77,26 +80,35 @@ namespace ChatApp
 
             }
 
-            foob.CreateGroupChat(newGroup, user);
-            groupsList.Add(newGroup);
-
-
-
-            Button groupButton = GroupButton_UI(newGroup);
-            if (mainWindow != null)
+            //Check is group name already exist
+            if (foob.CreateGroupChat(newGroup, user))
             {
-                StackPanel chatContainer = mainWindow.ChatContainer;
-                chatContainer.Children.Add(groupButton);
+                groupsList.Add(newGroup);
+
+
+
+                Button groupButton = GroupButton_UI(newGroup);
+                if (mainWindow != null)
+                {
+                    StackPanel chatContainer = mainWindow.ChatContainer;
+                    chatContainer.Children.Add(groupButton);
+                }
+
+                groupButton.Click += (s, args) =>
+                {
+                    Button clickedButton = (Button)s;
+                    string groupName = clickedButton.Content.ToString();
+
+                    Page1 chatHistoryPage = new Page1(mainWindow, user, newGroup, foob);
+                    mainWindow.ChatBox.NavigationService.Navigate(chatHistoryPage);
+                };
+
+                MessageBox.Show($"Successfully created new group: {newGroupName}");
             }
-
-            groupButton.Click += (s, args) =>
+            else
             {
-                Button clickedButton = (Button)s;
-                string groupName = clickedButton.Content.ToString();
-
-                Page1 chatHistoryPage = new Page1(mainWindow, user, newGroup, foob);
-                mainWindow.ChatBox.NavigationService.Navigate(chatHistoryPage);
-            };
+                MessageBox.Show($"Unable to create new group because group Name already exists");
+            }
         }
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
@@ -107,13 +119,13 @@ namespace ChatApp
         }
 
 
-
+        //public method to return groupList
         public List<ChatGroup> GroupList
         {
             get { return groupsList; }
         }
 
-
+        
         public Button GroupButton_UI(ChatGroup group)
         {
             // Create a StackPanel to hold the text and image
@@ -130,10 +142,10 @@ namespace ChatApp
             // Create an Image control and set its properties
             Image image = new Image
             {
-                Source = new BitmapImage(new Uri(imagePath)), // Replace 'icon.png' with your image path
+                Source = new BitmapImage(new Uri(imagePath)),
                 Width = 24,
                 Height = 24,
-                Margin = new Thickness(0, 0, 5, 0) // Optional margin to separate image and text
+                Margin = new Thickness(0, 0, 5, 0) 
             };
 
             // Create a TextBlock to display the text
@@ -158,7 +170,6 @@ namespace ChatApp
                 Background = Brushes.Transparent,
                 Foreground = Brushes.Black,
                 FontSize = 15,
-                // Add other customizations as needed
             };
 
             // Set the Tag property of the button to the ChatGroup object

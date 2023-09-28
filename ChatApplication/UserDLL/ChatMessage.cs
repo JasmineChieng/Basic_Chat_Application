@@ -12,7 +12,7 @@ namespace UserDLL
         public string Message { get; set; }
         public DateTime Timestamp { get; set; }
 
-        public List<FileAttachment> Attachments { get; set; } // List of file attachments
+        public List<FileAttachment> Attachments { get; set; } 
 
         public ChatMessage()
         {

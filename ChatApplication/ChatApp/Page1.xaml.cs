@@ -63,6 +63,7 @@ namespace ChatApp
             // Call the method to populate the sidePanel with member buttons
             PopulateSidePanelWithMemberButtons();
 
+            //initialize the this is a group chat not private chat
             isPrivate = false;
         }
 
@@ -72,11 +73,8 @@ namespace ChatApp
             InitializeComponent();
 
             List<PrivateMessage> tempPMList = foob.LoadPMHistory(messagingUser);
-            //List<PrivateMessage> tempPMList = messagingUser.PrivateMessages;
-            //List of private messages that the current user has sent before
 
             List<PrivateMessage> privateChatHistory = new List<PrivateMessage>();
-            //List of private messages that is between the messaging and receiving user
 
             bool isTempEmpty = !tempPMList.Any();
             if (!isTempEmpty)
@@ -113,20 +111,15 @@ namespace ChatApp
 
             viewMoreBtn.Visibility = Visibility.Collapsed;
 
-            // Load the chat group's members first
-            //LoadChatGroupMembers();
-
-            // Call the method to populate the sidePanel with member buttons
-            //PopulateSidePanelWithMemberButtons();
-
             sendBtn.Click -= sendBtn_Click;
             sendBtn.Click += sendPMBtn_Click;
 
+            //initialize that this is a private message
             isPrivate = true;
         }
 
 
-        //For creating private chat button in window1
+        //Overloaded constructor for creating private chat button in window1
         public Page1(Window1 chatWindow, User user, BusinessInterface foob)
         {
             InitializeComponent();
@@ -136,6 +129,7 @@ namespace ChatApp
             this.chatWindow = chatWindow;
 
         }
+        //Loading chat group members
         private void LoadChatGroupMembers()
         {
             List<User> members = foob.LoadChatGroupMembers(chatgroup);
@@ -146,7 +140,6 @@ namespace ChatApp
         }
 
 
-        
         private void sendBtn_Click(object sender, RoutedEventArgs e)
         {
             
@@ -212,19 +205,19 @@ namespace ChatApp
 
         private void PopulateSidePanelWithMemberButtons()
         {
-            // Clear the existing buttons in the sideStackPanel
+            // Clear the existing buttons in the sideStackPanel before populate a new one
             sideStackPanel.Children.Clear();
 
             foreach (User member in chatgroup.Members)
             {
-                // Create a button for each member
+                // Create a button for each member in the chat group
                 Button memberButton = new Button
                 {
                     Content = member.Username, // Display the member's username on the button
                     Width = 150,
                     Height = 30,
                     Margin = new Thickness(10, 5, 10, 5),
-                    Background = new SolidColorBrush(Colors.Yellow) // Set the background color
+                    Background = new SolidColorBrush(Colors.Yellow) 
                 };
 
                 // Handle the click event for the member button
@@ -236,7 +229,7 @@ namespace ChatApp
         }
 
 
-
+ 
         private void MemberButton_Click(object sender, RoutedEventArgs e)
         {
             List<PrivateMessage> privateMessages = user.PrivateMessages;
@@ -254,6 +247,7 @@ namespace ChatApp
                  
                             if (!user.PrivateMessages.Any(pm => pm.Sender == receivingUser.Username))
                             {
+                                //Creating the private chat button for the chatList 
                                 Button groupButton = PrivateButton_UI(receivingUser);
                                 if (chatWindow != null)
                                 {
@@ -270,7 +264,7 @@ namespace ChatApp
                                     chatWindow.ChatBox.NavigationService.Navigate(memberPage);
                                 };
 
-                                createdButtons.Add(memberUsername); // Add the username to the HashSet to mark it as created
+                                createdButtons.Add(memberUsername); // Add the username to the HashSet to mark it as created to avoid duplicated when user clicked same user for multiple times
                             }
                         }
 
@@ -285,7 +279,7 @@ namespace ChatApp
             if (foob.handleLeaveGroup(chatgroup, user))
             {
                 StackPanel chatContainer = chatWindow.ChatContainer;
-                string groupNameToRemove = chatgroup.Name; // Replace with the actual group name
+                string groupNameToRemove = chatgroup.Name; 
 
                 // Find and remove the child Button with the matching group name
                 Button buttonToRemove = null;
@@ -315,6 +309,7 @@ namespace ChatApp
                 // Update the side panel with member buttons
                 PopulateSidePanelWithMemberButtons();
 
+                //Navigate to default page 
                 Page2 defaultPage = new Page2();
                 chatWindow.ChatBox.NavigationService.Navigate(defaultPage);
 
@@ -326,6 +321,7 @@ namespace ChatApp
 
         }
      
+        //handling sendFiles 
         private void sendFileBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -399,6 +395,7 @@ namespace ChatApp
             foob.handlePrivateMessage(user,receiver,privateMessage);
         }
 
+   
         private void HandleChatMessageAttachment(string selectedFilePath, string selectedFileExtension)
         {
             // Create a chat message
@@ -444,6 +441,8 @@ namespace ChatApp
             chatMessages.Add(chatMessage);
             foob.handleMessage(chatgroup, chatMessage);
         }
+        
+        //Handling when user clicked on attachment to download
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
@@ -541,6 +540,9 @@ namespace ChatApp
                 MessageBox.Show($"File downloaded to: {downloadPath}");
             }
         }
+
+
+        //UI for private message button
         public Button PrivateButton_UI(User user)
         {
             // Create a StackPanel to hold the text and image
@@ -554,19 +556,18 @@ namespace ChatApp
             string imagePath = System.IO.Path.Combine(baseDirectory, imageRelativePath);
 
 
-            // Create an Image control and set its properties
             Image image = new Image
             {
-                Source = new BitmapImage(new Uri(imagePath)), // Replace 'icon.png' with your image path
+                Source = new BitmapImage(new Uri(imagePath)), 
                 Width = 24,
                 Height = 24,
-                Margin = new Thickness(0, 0, 5, 0) // Optional margin to separate image and text
+                Margin = new Thickness(0, 0, 5, 0) 
             };
 
             // Create a TextBlock to display the text
             TextBlock textBlock = new TextBlock
             {
-                Text = user.Username, // Use the group name from the ChatGroup object
+                Text = user.Username, // Use the user name
                 VerticalAlignment = VerticalAlignment.Center,
                 Width = 100,
                 FontSize = 14
@@ -585,10 +586,9 @@ namespace ChatApp
                 Background = Brushes.Transparent,
                 Foreground = Brushes.Black,
                 FontSize = 15,
-                // Add other customizations as needed
             };
 
-            // Set the Tag property of the button to the ChatGroup object
+            // Set the Tag property of the button to the private object
             privateButton.Tag = user;
 
             privateButton.Click += PrivateButton_Click; // Handle button click event

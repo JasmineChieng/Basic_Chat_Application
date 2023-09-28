@@ -22,8 +22,7 @@ namespace DatabaseServer
             chatGroups = LoadChatGroups();
         }
 
-      //  private ServerInterface foob;
-
+        //handling user registration
         public bool RegisterUser(User user)
         {
             // Check if the username is already taken
@@ -41,52 +40,49 @@ namespace DatabaseServer
             return true; // Registration successful
         }
 
-        /* public bool LoginUser(string username, string password)
-          {
-              // Check if the user exists and the password matches (you should use a secure password hashing mechanism)
-              var user = users.FirstOrDefault(u => u.Username == username && u.Password == password);
-
-              return user != null;
-          }*/
-
+        //handling user login
         public User LoginUser(string username)
         {
-            User user = users.FirstOrDefault(u => u.Username == username);
+            User user = users.FirstOrDefault(u => u.Username == username); //Check if username is found
             if (user != null)
-            { return user; }
+            { return user; } //return true if user found
             return null;
         }
 
-
+        //handling user creating a new group
         public bool CreateGroupChat(ChatGroup chatGroup, User user)
         {
             // Check if the chat group name is unique
-            if (chatGroups.Any(c => c.Name == chatGroup.Name))
+            if (chatGroups.Any(c => string.Equals(c.Name, chatGroup.Name, StringComparison.OrdinalIgnoreCase)))
             {
                 return false; // Chat group name already exists
             }
-            chatGroup.Members.Add(user);
-            // Update the JoinedGroups list for all users
-            foreach (User u in users)
+            else
             {
-                if (u.Username.Equals(user.Username))
+                chatGroup.Members.Add(user);
+                // Update the JoinedGroups list for all users
+                foreach (User u in users)
                 {
-                    u.JoinedGroups.Add(chatGroup);
+                    if (u.Username.Equals(user.Username))
+                    {
+                        u.JoinedGroups.Add(chatGroup);
+                    }
+
                 }
 
+                // Store the chat group in the list
+                chatGroups.Add(chatGroup);
+                // Save the modified chat groups list to the file
+                SaveChatGroups();
+                // Save the modified user data (including JoinedGroups) to the file
+                SaveUserData();
+
+                return true; // Chat group creation successful
             }
-
-            // Store the chat group in the list
-            chatGroups.Add(chatGroup);
-            // Save the modified chat groups list to the file
-            SaveChatGroups();
-            // Save the modified user data (including JoinedGroups) to the file
-            SaveUserData();
-
-            return true; // Chat group creation successful
         }
 
 
+        //Handling user join group
         public bool JoinGroupChat(ChatGroup chatGroup, User user)
         {
             bool isUserAlreadyMember = user.JoinedGroups.Any(group => group.Name == chatGroup.Name);
@@ -99,7 +95,7 @@ namespace DatabaseServer
                 if (targetChatGroup != null)
                 {
 
-                    // Check if the user is already a member of the group
+                    // Check if the user is already a member of the group 
                     if (!targetChatGroup.Members.Contains(user))
                     {
                         targetChatGroup.Members.Add(user);
@@ -127,12 +123,10 @@ namespace DatabaseServer
                 }
             }
 
-
-
             return false; // Chat group not found
         }
 
-       
+       // find user method
         public User GetUser(String memberUsername)
         {
             foreach (User u in users)
@@ -192,8 +186,7 @@ namespace DatabaseServer
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that may occur during file saving
-                // You can log the error or take appropriate action
+                Console.WriteLine("Error saving group chats details : ", ex.ToString());
             }
         }
 
@@ -216,8 +209,7 @@ namespace DatabaseServer
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that may occur during file loading
-                // You can log the error or take appropriate action
+                Console.WriteLine("Error loading group chats details : ", ex.ToString());
             }
 
             return new List<ChatGroup>(); // Return an empty list if the file doesn't exist or there's an error
@@ -238,8 +230,6 @@ namespace DatabaseServer
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that may occur during file saving
-                // You can log the error or take appropriate action
                 Console.WriteLine("Error saving user data: " + ex.Message);
             }
         }
@@ -263,12 +253,13 @@ namespace DatabaseServer
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that may occur during file loading
-                // You can log the error or take appropriate action
+                Console.WriteLine("Error loading user data: " + ex.Message);
             }
 
             return new List<User>(); // Return an empty list if the file doesn't exist or there's an error
         }
+
+        //handling user send message
         public void handleMessage(ChatGroup chatGroup, ChatMessage newMessage)
         {
             foreach (ChatGroup c in chatGroups)
@@ -322,6 +313,8 @@ namespace DatabaseServer
                 return output.ToArray();
             }
         }
+
+        //handling private message 
         public void handlePrivateMessage(User messagingUser, User receivingUser, PrivateMessage newMessage)
         {
 
@@ -330,21 +323,19 @@ namespace DatabaseServer
                 if (user.Username.Equals(messagingUser.Username))
                 {
                     user.PrivateMessages.Add(newMessage);
-                    //user.JoinedPrivateChats.Add(receivingUser.Username);
                 }
                 //adds the receiving user information to the messaging user
 
                 if (user.Username.Equals(receivingUser.Username))
                 {
                     user.PrivateMessages.Add(newMessage);
-                    //user.JoinedPrivateChats.Add(messagingUser.Username);
                 }
                 //adds the messaging user's name to the receivings users list
             }
             SaveUserData();
         }
 
-
+        //handling loading group chat history
         public List<ChatMessage> LoadChatHistory(ChatGroup chatGroup)
         {
 
@@ -363,6 +354,7 @@ namespace DatabaseServer
             }
         }
 
+        //handling loading private message chat history
         public List<PrivateMessage> LoadPMHistory(User messagingUser)
         {
             // Check if the chat group exists in your chatGroups list
@@ -374,11 +366,13 @@ namespace DatabaseServer
             }        
             else
             {
-                return new List<PrivateMessage>();
+                // If the private message doesn't exist, return an empty list
+                return new List<PrivateMessage>(); 
             }
 
         }
 
+        //handling user leaving group
         public bool handleLeaveGroup(ChatGroup chatgroup, User user)
         {
             if (chatgroup != null && user != null)
@@ -445,11 +439,13 @@ namespace DatabaseServer
             }
             else
             {
-                // Handle cases where the group or user is not found
+                Console.WriteLine("Unable to find user from the group ");
             }
 
             return false;
         }
+
+        //handling loading members from chat group
         public List<User> LoadChatGroupMembers(ChatGroup chatgroup)
         {
             foreach (ChatGroup c in chatGroups)

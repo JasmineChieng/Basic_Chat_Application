@@ -40,7 +40,7 @@ namespace ChatApp
             InitializeComponent();
             ChannelFactory<BusinessInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
-            tcp.MaxReceivedMessageSize = 2147483647; // Set your desired size here
+            tcp.MaxReceivedMessageSize = 2147483647; //Set receive message size to the max 
             //Set the URL and create the connection!
             string URL = "net.tcp://localhost:8200/DataBusinessService";
             foobFactory = new ChannelFactory<BusinessInterface>(tcp, URL);
@@ -58,6 +58,7 @@ namespace ChatApp
 
             User user = foob.LoginUser(username);
 
+            //Check if user doest fill up all field
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) )
             {
                 MessageBox.Show("Please fill up all field");

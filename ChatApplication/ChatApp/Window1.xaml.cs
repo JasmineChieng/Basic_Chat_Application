@@ -44,6 +44,7 @@ namespace ChatApp
 
         }
 
+        //To ensure that everytime when a group / private message is created, it will refresh immediately
         public void refreshChatContainer(User user)
         {
 
@@ -89,17 +90,21 @@ namespace ChatApp
           
 
         }
+
+        //handling when user click the create group button
         private void createGroupBtn_Click(object sender, RoutedEventArgs e)
         {
             ChatBox.Content = new Page3(this, user, foob);
         }
 
+        //handling when user click the view available group button
         private void viewGroupBtn_Click(object sender, RoutedEventArgs e)
         {
             page3 = new Page3(this, user, foob);
             ChatBox.Content = new Page4(page3, user, foob, this);
         }
 
+        //handling when the created group button is clicked
         private void Page3_GroupButton_Click(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button)sender;
@@ -110,6 +115,8 @@ namespace ChatApp
                 ChatBox.NavigationService.Navigate(chatHistoryPage);
             }
         }
+
+        //handling when private message button is clicked
         private void Page1_PrivateButton_Click(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button)sender;
@@ -117,14 +124,12 @@ namespace ChatApp
             // Retrieve the User object from the Tag property
             if (clickedButton.Tag is User selectedUser)
             {
-                // You now have the selected User object
-                // Implement your logic here, such as opening a private chat with this user
                 Page1 chatHistoryPage = new Page1(user, selectedUser, foob);
                 ChatBox.NavigationService.Navigate(chatHistoryPage);
             }
         }
 
-
+        //handling user logout 
         private void logoutBtn_Click(object sender, RoutedEventArgs e)
         {
             MainWindow login = new MainWindow();

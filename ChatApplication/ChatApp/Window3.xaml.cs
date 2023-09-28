@@ -30,6 +30,7 @@ namespace ChatApp
             this.foob = foob;
         }
 
+        //handling registration
         private void registerBtn_Click(object sender, RoutedEventArgs e)
         {
             string username = usernameTB.Text;
